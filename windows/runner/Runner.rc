@@ -95,7 +95,7 @@ BEGIN
             VALUE "InternalName", "chain_arithmetics" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.loloof64. All rights reserved." "\0"
             VALUE "OriginalFilename", "chain_arithmetics.exe" "\0"
-            VALUE "ProductName", "chain_arithmetics" "\0"
+            VALUE "ProductName", "Chain arithmetics" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
