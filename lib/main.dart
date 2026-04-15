@@ -1,3 +1,4 @@
+import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,6 +27,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Operation _currentOperation = Operation.randomOperation();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +36,21 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Home"),
       ),
-      body: Center(child: const Text("Hello, World")),
+      body: Center(
+        child: Row(
+          children: [
+            Text(_currentOperation.questionRepr()),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _currentOperation = Operation.randomOperation();
+                });
+              },
+              child: Text("Change operation"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
