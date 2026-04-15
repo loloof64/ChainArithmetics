@@ -1,4 +1,5 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,7 +28,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Operation _currentOperation = Operation.randomOperation();
+  StandardGenerator _currentOperations = StandardGenerator.generate();
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +38,16 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Home"),
       ),
       body: Center(
-        child: Row(
+        child: Column(
           children: [
-            Text(_currentOperation.questionRepr()),
+            Text(_currentOperations.questionRepr()),
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _currentOperation = Operation.randomOperation();
+                  _currentOperations = StandardGenerator.generate();
                 });
               },
-              child: Text("Change operation"),
+              child: Text("Change exercise"),
             ),
           ],
         ),
