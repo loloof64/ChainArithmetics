@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
+import 'package:chain_arithmetics/utils.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/digit_keyboard.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 
@@ -45,9 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
   StandardGenerator _currentOperations = StandardGenerator.generate();
   int _firstOperationIndex = 0;
   int? _previousAnswer;
+  int _currentAnswer = 0;
   List<Operation> _bufferQuestions = [];
-
-  final Random _tempRandom = Random();
 
   @override
   void initState() {
@@ -84,11 +85,32 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _gotoNextQuestion() {
+  void _insertDigit(int digit) {
+    final isExerciseOver =
+        _firstOperationIndex >= _currentOperations.operations.length;
+
+    if (isExerciseOver) return;
+
+    setState(() {
+      _currentAnswer *= 10;
+      _currentAnswer += digit;
+    });
+    final currentQuestion = _currentOperations
+        .relatedOperations()[_firstOperationIndex];
+    final expectedDigitsCount = numberOfDigits(currentQuestion.result);
+    final userAnswerDigitsCount = numberOfDigits(_currentAnswer);
+
+    if (userAnswerDigitsCount >= expectedDigitsCount) {
+      _validateAnswer();
+    }
+  }
+
+  void _validateAnswer() {
     if (_firstOperationIndex < _currentOperations.relatedOperations().length) {
       setState(() {
         _firstOperationIndex++;
-        _previousAnswer = _tempRandom.nextInt(15) + 2;
+        _previousAnswer = _currentAnswer;
+        _currentAnswer = 0;
       });
       _updateBuffer();
     }
@@ -117,26 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
               questions: _bufferQuestions,
               capacity: maxBufferOperations,
             ),
-            Flexible(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      _generateExercise();
-                    },
-                    child: Text("Change exercise"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _gotoNextQuestion();
-                    },
-                    child: Text("Next question"),
-                  ),
-                ],
-              ),
-            ),
+            DigitalKeyboardWidget(insertDigit: _insertDigit),
           ],
         ),
       ),
