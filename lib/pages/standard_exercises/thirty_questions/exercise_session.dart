@@ -6,6 +6,7 @@ import 'package:chain_arithmetics/widgets/exercise_session/digit_keyboard.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class ThirtyQuestionsStandardPage extends StatefulWidget {
   const ThirtyQuestionsStandardPage({super.key});
@@ -17,10 +18,13 @@ class ThirtyQuestionsStandardPage extends StatefulWidget {
 
 class _ThirtyQuestionsStandardPageState
     extends State<ThirtyQuestionsStandardPage> {
+  Timer? _timer;
+  int _remainingSeconds = 60;
   StandardGenerator _currentOperations = StandardGenerator.generate();
   int _firstOperationIndex = 0;
   int? _previousAnswer;
   int _currentAnswer = 0;
+  bool _timeout = false;
   List<Operation> _bufferQuestions = [];
 
   @override
@@ -30,12 +34,30 @@ class _ThirtyQuestionsStandardPageState
   }
 
   void _generateExercise() {
+    _timer?.cancel();
     setState(() {
       _currentOperations = StandardGenerator.generate();
       _firstOperationIndex = 0;
       _previousAnswer = null;
+      _timeout = false;
+      _remainingSeconds = 60;
     });
     _updateBuffer();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_isExerciseOver()) {
+        timer.cancel();
+        return;
+      }
+      setState(() {
+        if (_remainingSeconds > 0) {
+          _remainingSeconds--;
+        }
+        if (_remainingSeconds == 0) {
+          _timeout = true;
+          timer.cancel();
+        }
+      });
+    });
   }
 
   void _updateBuffer() {
@@ -59,7 +81,8 @@ class _ThirtyQuestionsStandardPageState
   }
 
   bool _isExerciseOver() {
-    return _firstOperationIndex >= _currentOperations.operations.length;
+    return _firstOperationIndex >= _currentOperations.operations.length ||
+        _timeout;
   }
 
   void _insertDigit(int digit) {
@@ -87,6 +110,9 @@ class _ThirtyQuestionsStandardPageState
         _currentAnswer = 0;
       });
       _updateBuffer();
+    }
+    if (_isExerciseOver()) {
+      _timer?.cancel();
     }
   }
 
@@ -119,9 +145,27 @@ class _ThirtyQuestionsStandardPageState
             ),
             _isExerciseOver()
                 ? Center(
-                    child: ElevatedButton(
-                      onPressed: _generateExercise,
-                      child: Text("New exercise"),
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.white.withAlpha(210),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (_timeout)
+                            Text("Time out !", style: TextStyle(fontSize: 30)),
+                          if (!_timeout)
+                            Text(
+                              "Remaining time : $_remainingSeconds s",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                        ],
+                      ),
                     ),
                   )
                 : Container(
@@ -130,8 +174,18 @@ class _ThirtyQuestionsStandardPageState
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Remaining time : $_remainingSeconds s",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                           DigitalKeyboardWidget(insertDigit: _insertDigit),
                         ],
                       ),

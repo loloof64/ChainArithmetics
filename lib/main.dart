@@ -1,11 +1,4 @@
-import 'package:chain_arithmetics/core/generators/operations/operation.dart';
-import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
 import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions/exercise_session.dart';
-import 'package:chain_arithmetics/utils.dart';
-import 'package:chain_arithmetics/widgets/constants.dart';
-import 'package:chain_arithmetics/widgets/exercise_session/digit_keyboard.dart';
-import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
-import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
