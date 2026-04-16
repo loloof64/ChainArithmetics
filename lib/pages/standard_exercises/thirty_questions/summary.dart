@@ -37,7 +37,8 @@ class SummaryPage extends StatelessWidget {
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           Text(
-            "Penalty: $penaltyCount * ${penaltyTimeSeconds}s = ${penaltyCount * penaltyTimeSeconds}",
+            "Penalty: $penaltyCount * ${penaltyTimeSeconds}s = ${penaltyCount * penaltyTimeSeconds}s",
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Expanded(
             child: ListView.builder(

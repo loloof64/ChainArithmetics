@@ -42,7 +42,9 @@ class QuestionAnswerWidget extends StatelessWidget {
                 fontSize: commonFontSize,
                 fontWeight: FontWeight(commonFontWeight),
                 color: Colors.red,
-                decoration: TextDecoration.lineThrough,
+                decoration: userAnswer == null
+                    ? TextDecoration.none
+                    : TextDecoration.lineThrough,
               ),
             ),
           if (!isRightAnswer)

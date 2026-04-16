@@ -74,6 +74,19 @@ class _ThirtyQuestionsStandardPageState
         });
         await _playTimeoutSound();
         timer.cancel();
+        if (!mounted) return;
+        Navigator.of(context).pushReplacement<void, void>(
+          MaterialPageRoute(
+            builder: (ctx2) {
+              return SummaryPage(
+                remainingTimeSeconds: _remainingSeconds,
+                penaltyCount: _penaltiesCount,
+                questions: _currentOperations.relatedOperations(),
+                userAnswers: _answers,
+              );
+            },
+          ),
+        );
       }
     });
   }
@@ -194,7 +207,7 @@ class _ThirtyQuestionsStandardPageState
           Duration(milliseconds: 600),
         );
         setState(() {
-          _penaltiesCount -= penaltyTimeSeconds;
+          _penaltiesCount++;
           _remainingSeconds -= penaltyTimeSeconds;
         });
       }
