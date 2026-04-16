@@ -1,5 +1,6 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
+import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions/summary.dart';
 import 'package:chain_arithmetics/utils.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/digit_keyboard.dart';
@@ -26,6 +27,7 @@ class _ThirtyQuestionsStandardPageState
   int _currentAnswer = 0;
   bool _timeout = false;
   List<Operation> _bufferQuestions = [];
+  List<int> _answers = [];
 
   @override
   void initState() {
@@ -37,6 +39,7 @@ class _ThirtyQuestionsStandardPageState
     _timer?.cancel();
     setState(() {
       _currentOperations = StandardGenerator.generate();
+      _answers = [];
       _firstOperationIndex = 0;
       _previousAnswer = null;
       _timeout = false;
@@ -98,6 +101,9 @@ class _ThirtyQuestionsStandardPageState
     final userAnswerDigitsCount = numberOfDigits(_currentAnswer);
 
     if (userAnswerDigitsCount >= expectedDigitsCount) {
+      setState(() {
+        _answers.add(_currentAnswer);
+      });
       _validateAnswer();
     }
   }
@@ -113,6 +119,17 @@ class _ThirtyQuestionsStandardPageState
     }
     if (_isExerciseOver()) {
       _timer?.cancel();
+      Navigator.of(context).pushReplacement<void, void>(
+        MaterialPageRoute(
+          builder: (ctx2) {
+            return SummaryPage(
+              remainingTimeSeconds: _remainingSeconds,
+              questions: _currentOperations.relatedOperations(),
+              userAnswers: _answers,
+            );
+          },
+        ),
+      );
     }
   }
 

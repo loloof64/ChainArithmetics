@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class QuestionAnswerWidget extends StatelessWidget {
   final Operation operation;
-  final int userAnswer;
+  final int? userAnswer;
 
   const QuestionAnswerWidget({
     super.key,
@@ -37,7 +37,7 @@ class QuestionAnswerWidget extends StatelessWidget {
             ),
           if (!isRightAnswer)
             TextSpan(
-              text: userAnswer.toString(),
+              text: userAnswer == null ? "__" : userAnswer.toString(),
               style: TextStyle(
                 fontSize: commonFontSize,
                 fontWeight: FontWeight(commonFontWeight),
@@ -47,16 +47,7 @@ class QuestionAnswerWidget extends StatelessWidget {
             ),
           if (!isRightAnswer)
             TextSpan(
-              text: "  ",
-              style: TextStyle(
-                fontSize: commonFontSize,
-                fontWeight: FontWeight(commonFontWeight),
-                color: Colors.blue,
-              ),
-            ),
-          if (!isRightAnswer)
-            TextSpan(
-              text: operation.result.toString(),
+              text: " ${operation.result.toString()}",
               style: TextStyle(
                 fontSize: commonFontSize,
                 fontWeight: FontWeight(commonFontWeight),
