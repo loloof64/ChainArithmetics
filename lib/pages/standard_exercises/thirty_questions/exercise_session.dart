@@ -8,6 +8,7 @@ import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart'
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 
 class ThirtyQuestionsStandardPage extends StatefulWidget {
   const ThirtyQuestionsStandardPage({super.key});
@@ -29,10 +30,19 @@ class _ThirtyQuestionsStandardPageState
   List<Operation> _bufferQuestions = [];
   List<int> _answers = [];
 
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
   void initState() {
     super.initState();
     _generateExercise();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   void _generateExercise() {
@@ -46,21 +56,36 @@ class _ThirtyQuestionsStandardPageState
       _remainingSeconds = 60;
     });
     _updateBuffer();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       if (_isExerciseOver()) {
         timer.cancel();
         return;
       }
-      setState(() {
-        if (_remainingSeconds > 0) {
+      if (_remainingSeconds > 0) {
+        setState(() {
           _remainingSeconds--;
-        }
-        if (_remainingSeconds == 0) {
+        });
+      }
+      if (_remainingSeconds == 0) {
+        setState(() {
           _timeout = true;
-          timer.cancel();
-        }
-      });
+        });
+        await _playTimeoutSound();
+        timer.cancel();
+      }
     });
+  }
+
+  Future<void> _playTimeoutSound() async {
+    await _audioPlayer.play(AssetSource('sounds/timeout.wav'));
+  }
+
+  Future<void> _playSuccessSound() async {
+    await _audioPlayer.play(AssetSource('sounds/correct.wav'));
+  }
+
+  Future<void> _playWrongSound() async {
+    await _audioPlayer.play(AssetSource('sounds/wrong.wav'));
   }
 
   void _updateBuffer() {
@@ -88,7 +113,7 @@ class _ThirtyQuestionsStandardPageState
         _timeout;
   }
 
-  void _insertDigit(int digit) {
+  void _insertDigit(int digit, BuildContext context) {
     if (_isExerciseOver()) return;
 
     setState(() {
@@ -104,12 +129,21 @@ class _ThirtyQuestionsStandardPageState
       setState(() {
         _answers.add(_currentAnswer);
       });
-      _validateAnswer();
+      _validateAnswer(context);
     }
   }
 
-  void _validateAnswer() {
+  void _validateAnswer(BuildContext context) async {
     if (_firstOperationIndex < _currentOperations.relatedOperations().length) {
+      final expectedResult = _currentOperations
+          .relatedOperations()[_firstOperationIndex]
+          .result;
+      final isRightAnswer = expectedResult == _currentAnswer;
+      if (isRightAnswer) {
+        await _playSuccessSound();
+      } else {
+        await _playWrongSound();
+      }
       setState(() {
         _firstOperationIndex++;
         _previousAnswer = _currentAnswer;
@@ -119,6 +153,7 @@ class _ThirtyQuestionsStandardPageState
     }
     if (_isExerciseOver()) {
       _timer?.cancel();
+      if (!context.mounted) return;
       Navigator.of(context).pushReplacement<void, void>(
         MaterialPageRoute(
           builder: (ctx2) {
@@ -203,7 +238,10 @@ class _ThirtyQuestionsStandardPageState
                               ),
                             ),
                           ),
-                          DigitalKeyboardWidget(insertDigit: _insertDigit),
+                          DigitalKeyboardWidget(
+                            insertDigit: (digit) =>
+                                _insertDigit(digit, context),
+                          ),
                         ],
                       ),
                     ),
