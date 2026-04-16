@@ -1,5 +1,6 @@
 import 'package:chain_arithmetics/gen/strings.g.dart';
-import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions/exercise_session.dart';
+import 'package:chain_arithmetics/pages/standard_exercises/one_hundred_questions.dart';
+import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions.dart';
 import 'package:flutter/material.dart';
 
 class StandardExercisesHomePage extends StatelessWidget {
@@ -10,6 +11,16 @@ class StandardExercisesHomePage extends StatelessWidget {
       MaterialPageRoute(
         builder: (ctx2) {
           return ThirtyQuestionsStandardPage();
+        },
+      ),
+    );
+  }
+
+  void _goToOneHundredQuestions(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx2) {
+          return OneHundredQuestionsStandardPage();
         },
       ),
     );
@@ -26,11 +37,17 @@ class StandardExercisesHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 5,
+          spacing: 15,
           children: [
             ElevatedButton(
               onPressed: () => _goToThirtyQuestions(context),
               child: Text(t.pages.standard_exercises.home.gotoThirtyQuestions),
+            ),
+            ElevatedButton(
+              onPressed: () => _goToOneHundredQuestions(context),
+              child: Text(
+                t.pages.standard_exercises.home.gotoOneHundredQuestions,
+              ),
             ),
           ],
         ),

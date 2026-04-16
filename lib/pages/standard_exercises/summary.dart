@@ -9,9 +9,11 @@ class SummaryPage extends StatelessWidget {
   final int penaltyCount;
   final List<Operation> questions;
   final List<int> userAnswers;
+  final String title;
 
   const SummaryPage({
     super.key,
+    required this.title,
     required this.remainingTimeSeconds,
     required this.penaltyCount,
     required this.questions,
@@ -22,7 +24,7 @@ class SummaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.pages.standard_exercises.thirty_questions.title),
+        title: Text(title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Column(

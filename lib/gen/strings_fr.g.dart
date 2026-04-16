@@ -83,7 +83,8 @@ class _TranslationsPagesStandardExercisesFr implements TranslationsPagesStandard
 
 	// Translations
 	@override late final _TranslationsPagesStandardExercisesHomeFr home = _TranslationsPagesStandardExercisesHomeFr._(_root);
-	@override late final _TranslationsPagesStandardExercisesThirtyQuestionsFr thirty_questions = _TranslationsPagesStandardExercisesThirtyQuestionsFr._(_root);
+	@override late final _TranslationsPagesStandardExercisesThirtyQuestionsFr thirtyQuestions = _TranslationsPagesStandardExercisesThirtyQuestionsFr._(_root);
+	@override late final _TranslationsPagesStandardExercisesOneHundredQuestionsFr oneHundredQuestions = _TranslationsPagesStandardExercisesOneHundredQuestionsFr._(_root);
 }
 
 // Path: pages.home.buttons
@@ -105,9 +106,10 @@ class _TranslationsPagesStandardExercisesHomeFr implements TranslationsPagesStan
 	// Translations
 	@override String get title => 'Calcul standard';
 	@override String get gotoThirtyQuestions => 'Questions sur 1 min';
+	@override String get gotoOneHundredQuestions => '100 questions';
 }
 
-// Path: pages.standard_exercises.thirty_questions
+// Path: pages.standard_exercises.thirtyQuestions
 class _TranslationsPagesStandardExercisesThirtyQuestionsFr implements TranslationsPagesStandardExercisesThirtyQuestionsEn {
 	_TranslationsPagesStandardExercisesThirtyQuestionsFr._(this._root);
 
@@ -115,6 +117,16 @@ class _TranslationsPagesStandardExercisesThirtyQuestionsFr implements Translatio
 
 	// Translations
 	@override String get title => 'Calcul: 35 questions / 1 min';
+}
+
+// Path: pages.standard_exercises.oneHundredQuestions
+class _TranslationsPagesStandardExercisesOneHundredQuestionsFr implements TranslationsPagesStandardExercisesOneHundredQuestionsEn {
+	_TranslationsPagesStandardExercisesOneHundredQuestionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Calcul: 100 questions';
 }
 
 /// The flat map containing all translations for locale <fr>.
@@ -132,7 +144,9 @@ extension on TranslationsFr {
 			'pages.home.buttons.standard_exercises' => 'Standard',
 			'pages.standard_exercises.home.title' => 'Calcul standard',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => 'Questions sur 1 min',
-			'pages.standard_exercises.thirty_questions.title' => 'Calcul: 35 questions / 1 min',
+			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 questions',
+			'pages.standard_exercises.thirtyQuestions.title' => 'Calcul: 35 questions / 1 min',
+			'pages.standard_exercises.oneHundredQuestions.title' => 'Calcul: 100 questions',
 			_ => null,
 		};
 	}

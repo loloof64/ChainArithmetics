@@ -95,7 +95,8 @@ class TranslationsPagesStandardExercisesEn {
 
 	// Translations
 	late final TranslationsPagesStandardExercisesHomeEn home = TranslationsPagesStandardExercisesHomeEn._(_root);
-	late final TranslationsPagesStandardExercisesThirtyQuestionsEn thirty_questions = TranslationsPagesStandardExercisesThirtyQuestionsEn._(_root);
+	late final TranslationsPagesStandardExercisesThirtyQuestionsEn thirtyQuestions = TranslationsPagesStandardExercisesThirtyQuestionsEn._(_root);
+	late final TranslationsPagesStandardExercisesOneHundredQuestionsEn oneHundredQuestions = TranslationsPagesStandardExercisesOneHundredQuestionsEn._(_root);
 }
 
 // Path: pages.home.buttons
@@ -123,9 +124,12 @@ class TranslationsPagesStandardExercisesHomeEn {
 
 	/// en: '1 min questions'
 	String get gotoThirtyQuestions => '1 min questions';
+
+	/// en: '100 questions'
+	String get gotoOneHundredQuestions => '100 questions';
 }
 
-// Path: pages.standard_exercises.thirty_questions
+// Path: pages.standard_exercises.thirtyQuestions
 class TranslationsPagesStandardExercisesThirtyQuestionsEn {
 	TranslationsPagesStandardExercisesThirtyQuestionsEn._(this._root);
 
@@ -135,6 +139,18 @@ class TranslationsPagesStandardExercisesThirtyQuestionsEn {
 
 	/// en: 'Calculation: 35 questions / 1 min'
 	String get title => 'Calculation: 35 questions / 1 min';
+}
+
+// Path: pages.standard_exercises.oneHundredQuestions
+class TranslationsPagesStandardExercisesOneHundredQuestionsEn {
+	TranslationsPagesStandardExercisesOneHundredQuestionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Calculation: 100 questions'
+	String get title => 'Calculation: 100 questions';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -152,7 +168,9 @@ extension on Translations {
 			'pages.home.buttons.standard_exercises' => 'Standard',
 			'pages.standard_exercises.home.title' => 'Standard calculation',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => '1 min questions',
-			'pages.standard_exercises.thirty_questions.title' => 'Calculation: 35 questions / 1 min',
+			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 questions',
+			'pages.standard_exercises.thirtyQuestions.title' => 'Calculation: 35 questions / 1 min',
+			'pages.standard_exercises.oneHundredQuestions.title' => 'Calculation: 100 questions',
 			_ => null,
 		};
 	}

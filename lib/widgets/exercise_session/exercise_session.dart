@@ -1,31 +1,31 @@
+import 'dart:async';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
 import 'package:chain_arithmetics/gen/strings.g.dart';
-import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions/summary.dart';
+import 'package:chain_arithmetics/pages/standard_exercises/summary.dart';
 import 'package:chain_arithmetics/utils.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/digit_keyboard.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
 
-const flagTooltipDurationMs = 650;
+const flagTooltipDurationMs = 800;
 const penaltyTooltipDurationMs = 600;
 final flagTooltipOffset = Offset(30, 100);
 final penaltyTooltipOffset = Offset(300, 100);
 
-class ThirtyQuestionsStandardPage extends StatefulWidget {
-  const ThirtyQuestionsStandardPage({super.key});
+class ExerciseSessionWidget extends StatefulWidget {
+  final String title;
+  const ExerciseSessionWidget({super.key, required this.title});
 
   @override
-  State<ThirtyQuestionsStandardPage> createState() =>
-      _ThirtyQuestionsStandardPageState();
+  State<ExerciseSessionWidget> createState() => _ExerciseSessionWidgetState();
 }
 
-class _ThirtyQuestionsStandardPageState
-    extends State<ThirtyQuestionsStandardPage> {
+class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
   Timer? _timer;
   int _remainingSeconds = 60;
   StandardGenerator _currentOperations = StandardGenerator.generate();
@@ -73,8 +73,7 @@ class _ThirtyQuestionsStandardPageState
         setState(() {
           _remainingSeconds--;
         });
-      }
-      if (_remainingSeconds == 0) {
+      } else {
         setState(() {
           _timeout = true;
         });
@@ -85,6 +84,7 @@ class _ThirtyQuestionsStandardPageState
           MaterialPageRoute(
             builder: (ctx2) {
               return SummaryPage(
+                title: widget.title,
                 remainingTimeSeconds: _remainingSeconds,
                 penaltyCount: _penaltiesCount,
                 questions: _currentOperations.relatedOperations(),
@@ -213,7 +213,7 @@ class _ThirtyQuestionsStandardPageState
         if (!context.mounted) return;
         _showQuickTooltip(
           context: context,
-          message: "2s",
+          message: "$penaltyTimeSeconds s",
           position: penaltyTooltipOffset,
           backgroundColor: Colors.red,
           duration: Duration(milliseconds: penaltyTooltipDurationMs),
@@ -248,6 +248,7 @@ class _ThirtyQuestionsStandardPageState
         MaterialPageRoute(
           builder: (ctx2) {
             return SummaryPage(
+              title: widget.title,
               remainingTimeSeconds: _remainingSeconds,
               penaltyCount: _penaltiesCount,
               questions: _currentOperations.relatedOperations(),
@@ -270,7 +271,7 @@ class _ThirtyQuestionsStandardPageState
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(t.pages.standard_exercises.thirty_questions.title),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Stack(

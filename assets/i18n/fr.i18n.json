@@ -14,10 +14,14 @@
     "standard_exercises": {
       "home": {
         "title": "Calcul standard",
-        "gotoThirtyQuestions": "Questions sur 1 min"
+        "gotoThirtyQuestions": "Questions sur 1 min",
+        "gotoOneHundredQuestions": "100 questions"
       },
-      "thirty_questions": {
+      "thirtyQuestions": {
         "title": "Calcul: 35 questions / 1 min"
+      },
+      "oneHundredQuestions": {
+        "title": "Calcul: 100 questions"
       }
     }
   }

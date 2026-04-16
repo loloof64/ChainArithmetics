@@ -83,7 +83,8 @@ class _TranslationsPagesStandardExercisesEs implements TranslationsPagesStandard
 
 	// Translations
 	@override late final _TranslationsPagesStandardExercisesHomeEs home = _TranslationsPagesStandardExercisesHomeEs._(_root);
-	@override late final _TranslationsPagesStandardExercisesThirtyQuestionsEs thirty_questions = _TranslationsPagesStandardExercisesThirtyQuestionsEs._(_root);
+	@override late final _TranslationsPagesStandardExercisesThirtyQuestionsEs thirtyQuestions = _TranslationsPagesStandardExercisesThirtyQuestionsEs._(_root);
+	@override late final _TranslationsPagesStandardExercisesOneHundredQuestionsEs oneHundredQuestions = _TranslationsPagesStandardExercisesOneHundredQuestionsEs._(_root);
 }
 
 // Path: pages.home.buttons
@@ -105,9 +106,10 @@ class _TranslationsPagesStandardExercisesHomeEs implements TranslationsPagesStan
 	// Translations
 	@override String get title => 'Cálculo estándar';
 	@override String get gotoThirtyQuestions => 'Preguntas sobre 1 min';
+	@override String get gotoOneHundredQuestions => '100 preguntas';
 }
 
-// Path: pages.standard_exercises.thirty_questions
+// Path: pages.standard_exercises.thirtyQuestions
 class _TranslationsPagesStandardExercisesThirtyQuestionsEs implements TranslationsPagesStandardExercisesThirtyQuestionsEn {
 	_TranslationsPagesStandardExercisesThirtyQuestionsEs._(this._root);
 
@@ -115,6 +117,16 @@ class _TranslationsPagesStandardExercisesThirtyQuestionsEs implements Translatio
 
 	// Translations
 	@override String get title => 'Cálculo: 35 preguntas / 1 min';
+}
+
+// Path: pages.standard_exercises.oneHundredQuestions
+class _TranslationsPagesStandardExercisesOneHundredQuestionsEs implements TranslationsPagesStandardExercisesOneHundredQuestionsEn {
+	_TranslationsPagesStandardExercisesOneHundredQuestionsEs._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Cálculo: 100 preguntas ';
 }
 
 /// The flat map containing all translations for locale <es>.
@@ -132,7 +144,9 @@ extension on TranslationsEs {
 			'pages.home.buttons.standard_exercises' => 'Estándar',
 			'pages.standard_exercises.home.title' => 'Cálculo estándar',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => 'Preguntas sobre 1 min',
-			'pages.standard_exercises.thirty_questions.title' => 'Cálculo: 35 preguntas / 1 min',
+			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 preguntas',
+			'pages.standard_exercises.thirtyQuestions.title' => 'Cálculo: 35 preguntas / 1 min',
+			'pages.standard_exercises.oneHundredQuestions.title' => 'Cálculo: 100 preguntas ',
 			_ => null,
 		};
 	}
