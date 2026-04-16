@@ -2,6 +2,12 @@
 
 Simple arithmetic, but be very fast.
 
+## For developers
+
+### Translations
+
+Generate translations with command `dart run slang` in the root of the project.
+
 ## Credits
 
 ### Sounds

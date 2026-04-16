@@ -1,5 +1,6 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
+import 'package:chain_arithmetics/gen/strings.g.dart';
 import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions/summary.dart';
 import 'package:chain_arithmetics/utils.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
@@ -263,7 +264,7 @@ class _ThirtyQuestionsStandardPageState
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Home"),
+        title: Text(t.pages.standard_exercises.thirty_questions.title),
       ),
       body: Center(
         child: Stack(
@@ -303,10 +304,15 @@ class _ThirtyQuestionsStandardPageState
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (_timeout)
-                            Text("Time out !", style: TextStyle(fontSize: 30)),
+                            Text(
+                              t.pages.common.timeout,
+                              style: TextStyle(fontSize: 30),
+                            ),
                           if (!_timeout)
                             Text(
-                              "Remaining time : $_remainingSeconds s",
+                              t.pages.common.remaining_time(
+                                remainingTimeSec: _remainingSeconds,
+                              ),
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -327,7 +333,9 @@ class _ThirtyQuestionsStandardPageState
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              "Remaining time : $_remainingSeconds s",
+                              t.pages.common.remaining_time(
+                                remainingTimeSec: _remainingSeconds,
+                              ),
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

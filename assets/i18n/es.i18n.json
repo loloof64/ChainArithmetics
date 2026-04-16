@@ -1,0 +1,24 @@
+{
+  "pages": {
+    "common": {
+      "timeout": "¡Tiempo agotado!",
+      "remaining_time": "Tiempo restante: $remainingTimeSec s",
+      "penalty": "Penalización: $penaltyCount * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s"
+    },
+    "home": {
+      "title": "Inicio",
+      "buttons": {
+        "standard_exercises": "Estándar"
+      }
+    },
+    "standard_exercises": {
+      "home": {
+        "title": "Cálculo estándar",
+        "gotoThirtyQuestions": "Preguntas sobre 1 min"
+      },
+      "thirty_questions": {
+        "title": "Cálculo: 35 preguntas / 1 min"
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/gen/strings.g.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class SummaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Summary (35 questions / 1 min)"),
+        title: Text(t.pages.standard_exercises.thirty_questions.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Column(
@@ -30,14 +31,20 @@ class SummaryPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (remainingTimeSeconds == 0)
-            Text("Time out !", style: TextStyle(fontSize: 30)),
+            Text(t.pages.common.timeout, style: TextStyle(fontSize: 30)),
           if (remainingTimeSeconds > 0)
             Text(
-              "Remaining time : $remainingTimeSeconds s",
+              t.pages.common.remaining_time(
+                remainingTimeSec: remainingTimeSeconds,
+              ),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           Text(
-            "Penalty: $penaltyCount * ${penaltyTimeSeconds}s = ${penaltyCount * penaltyTimeSeconds}s",
+            t.pages.common.penalty(
+              penaltyCount: penaltyCount,
+              penaltyTimeSeconds: penaltyTimeSeconds,
+              totalPenaltyTimeSeconds: penaltyCount * penaltyTimeSeconds,
+            ),
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Expanded(

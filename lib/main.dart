@@ -1,7 +1,9 @@
-import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions/exercise_session.dart';
+import 'package:chain_arithmetics/gen/strings.g.dart';
+import 'package:chain_arithmetics/pages/standard_exercises/home.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -9,7 +11,8 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  runApp(const MyApp());
+  LocaleSettings.useDeviceLocale();
+  runApp(TranslationProvider(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +22,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Chain arithmetics',
+      locale: TranslationProvider.of(context).flutterLocale,
+      supportedLocales: AppLocaleUtils.supportedLocales,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
       home: const MyHomePage(),
@@ -34,11 +40,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void _gotoExercisePage(BuildContext context) {
+  void _gotoStandardExercisesPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx2) {
-          return ThirtyQuestionsStandardPage();
+          return StandardExercisesHomePage();
         },
       ),
     );
@@ -48,13 +54,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text(t.pages.home.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () => _gotoExercisePage(context),
-          child: Text("Go to exercise"),
+          onPressed: () => _gotoStandardExercisesPage(context),
+          child: Text(t.pages.home.buttons.standard_exercises),
         ),
       ),
     );
