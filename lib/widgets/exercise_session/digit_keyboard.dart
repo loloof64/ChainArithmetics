@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const singleButtonSize = 60.0;
+
 class DigitalKeyboardWidget extends StatelessWidget {
   final void Function(int digit) insertDigit;
 
@@ -65,7 +67,7 @@ class SingleButtonWidget extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
-        minimumSize: Size(36, 36),
+        minimumSize: Size(singleButtonSize, singleButtonSize),
         backgroundColor: Colors.green,
       ),
       onPressed: () => callback(relatedDigit),

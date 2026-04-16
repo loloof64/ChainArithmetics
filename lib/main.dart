@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
 import 'package:chain_arithmetics/utils.dart';
@@ -10,8 +8,6 @@ import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-const maxBufferOperations = 5;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,11 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _insertDigit(int digit) {
-    final isExerciseOver =
-        _firstOperationIndex >= _currentOperations.operations.length;
+  bool _isExerciseOver() {
+    return _firstOperationIndex >= _currentOperations.operations.length;
+  }
 
-    if (isExerciseOver) return;
+  void _insertDigit(int digit) {
+    if (_isExerciseOver()) return;
 
     setState(() {
       _currentAnswer *= 10;
@@ -124,22 +121,45 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Home"),
       ),
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
           children: [
-            if (_firstOperationIndex > 0 && _previousAnswer != null)
-              QuestionAnswerWidget(
-                operation: _currentOperations
-                    .relatedOperations()[_firstOperationIndex - 1],
-                userAnswer: _previousAnswer!,
-              ),
-            QuestionsBufferWidget(
-              questions: _bufferQuestions,
-              capacity: maxBufferOperations,
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (_firstOperationIndex > 0 && _previousAnswer != null)
+                  QuestionAnswerWidget(
+                    operation: _currentOperations
+                        .relatedOperations()[_firstOperationIndex - 1],
+                    userAnswer: _previousAnswer!,
+                  ),
+                QuestionsBufferWidget(
+                  questions: _bufferQuestions,
+                  capacity: maxBufferOperations,
+                ),
+              ],
             ),
-            DigitalKeyboardWidget(insertDigit: _insertDigit),
+            _isExerciseOver()
+                ? Center(
+                    child: ElevatedButton(
+                      onPressed: _generateExercise,
+                      child: Text("New exercise"),
+                    ),
+                  )
+                : Container(
+                    height: double.infinity,
+                    color: Colors.white.withAlpha(210),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          DigitalKeyboardWidget(insertDigit: _insertDigit),
+                        ],
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

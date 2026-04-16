@@ -1,6 +1,6 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 
-const questionsCount = 30;
+const questionsCount = 35;
 
 class StandardGenerator {
   final List<Operation> operations;
