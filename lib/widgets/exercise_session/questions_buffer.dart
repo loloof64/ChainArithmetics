@@ -1,5 +1,7 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_list_plus/animated_list_plus.dart';
+import 'package:animated_list_plus/transitions.dart';
 
 const commonFontSize = 60.0;
 const commonFontWeight = 900;
@@ -22,25 +24,47 @@ class QuestionsBufferWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final questionsWidgets = questions
-        .map(
-          (e) => Text(
-            e.questionRepr(),
-            style: TextStyle(
-              fontSize: commonFontSize,
-              fontWeight: FontWeight(commonFontWeight),
-              color: e == dummyOperation ? Colors.transparent : Colors.black,
-            ),
-          ),
-        )
-        .toList();
-
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: questionsWidgets,
+      child: ImplicitlyAnimatedList<Operation>(
+        items: questions,
+        areItemsTheSame: (a, b) => a == b,
+        itemBuilder: (context, animation, item, index) {
+          return SizeFadeTransition(
+            animation: animation,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                item.questionRepr(),
+                style: TextStyle(
+                  fontSize: commonFontSize,
+                  fontWeight: FontWeight(commonFontWeight),
+                  color: item == dummyOperation
+                      ? Colors.transparent
+                      : Colors.black,
+                ),
+              ),
+            ),
+          );
+        },
+        removeItemBuilder: (context, animation, oldItem) {
+          return SizeFadeTransition(
+            animation: animation,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                oldItem.questionRepr(),
+                style: TextStyle(
+                  fontSize: commonFontSize,
+                  fontWeight: FontWeight(commonFontWeight),
+                  color: oldItem == dummyOperation
+                      ? Colors.transparent
+                      : Colors.black,
+                ),
+              ),
+            ),
+          );
+        },
+        shrinkWrap: true,
       ),
     );
   }
