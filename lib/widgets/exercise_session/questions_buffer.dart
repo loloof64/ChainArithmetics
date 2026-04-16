@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:animated_list_plus/transitions.dart';
 
+const animationDurationMs = 500;
+
 class QuestionsBufferWidget extends StatelessWidget {
   final List<Operation> questions;
   final int capacity;
@@ -20,6 +22,8 @@ class QuestionsBufferWidget extends StatelessWidget {
       child: ImplicitlyAnimatedList<Operation>(
         items: questions,
         areItemsTheSame: (a, b) => a == b,
+        insertDuration: Duration(milliseconds: animationDurationMs),
+        removeDuration: Duration(milliseconds: animationDurationMs),
         itemBuilder: (context, animation, item, index) {
           return SizeFadeTransition(
             animation: animation,
