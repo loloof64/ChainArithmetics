@@ -274,14 +274,20 @@ class _ThirtyQuestionsStandardPageState
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (_firstOperationIndex > 0 && _previousAnswer != null)
-                  QuestionAnswerWidget(
-                    operation: _currentOperations
-                        .relatedOperations()[_firstOperationIndex - 1],
-                    userAnswer: _previousAnswer!,
+                  Container(
+                    color: Colors.brown.shade300,
+                    child: QuestionAnswerWidget(
+                      operation: _currentOperations
+                          .relatedOperations()[_firstOperationIndex - 1],
+                      userAnswer: _previousAnswer!,
+                    ),
                   ),
-                QuestionsBufferWidget(
-                  questions: _bufferQuestions,
-                  capacity: maxBufferOperations,
+                Container(
+                  color: Colors.blue.shade200,
+                  child: QuestionsBufferWidget(
+                    questions: _bufferQuestions,
+                    capacity: maxBufferOperations,
+                  ),
                 ),
               ],
             ),
