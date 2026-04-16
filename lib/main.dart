@@ -3,7 +3,7 @@ import 'package:chain_arithmetics/core/generators/operations/standard_generator.
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 import 'package:flutter/material.dart';
 
-const maxBufferOperations = 6;
+const maxBufferOperations = 5;
 
 void main() {
   runApp(const MyApp());
@@ -87,6 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             QuestionsBufferWidget(
               questions: _bufferQuestions,

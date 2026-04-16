@@ -1,7 +1,7 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:flutter/material.dart';
 
-const commonFontSize = 100.0;
+const commonFontSize = 60.0;
 const commonFontWeight = 900;
 final dummyOperation = Operation(
   operand_1: 0,
@@ -38,7 +38,8 @@ class QuestionsBufferWidget extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: questionsWidgets,
       ),
     );
