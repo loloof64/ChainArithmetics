@@ -1,16 +1,8 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/question.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_list_plus/animated_list_plus.dart';
 import 'package:animated_list_plus/transitions.dart';
-
-const commonFontSize = 60.0;
-const commonFontWeight = 900;
-final dummyOperation = Operation(
-  operand_1: 0,
-  operand_2: 0,
-  result: 0,
-  relatedOperator: Operator.add,
-);
 
 class QuestionsBufferWidget extends StatelessWidget {
   final List<Operation> questions;
@@ -33,16 +25,7 @@ class QuestionsBufferWidget extends StatelessWidget {
             animation: animation,
             child: Align(
               alignment: Alignment.center,
-              child: Text(
-                item.questionRepr(),
-                style: TextStyle(
-                  fontSize: commonFontSize,
-                  fontWeight: FontWeight(commonFontWeight),
-                  color: item == dummyOperation
-                      ? Colors.transparent
-                      : Colors.black,
-                ),
-              ),
+              child: QuestionWidget(relatedQuestion: item),
             ),
           );
         },
@@ -51,16 +34,7 @@ class QuestionsBufferWidget extends StatelessWidget {
             animation: animation,
             child: Align(
               alignment: Alignment.center,
-              child: Text(
-                oldItem.questionRepr(),
-                style: TextStyle(
-                  fontSize: commonFontSize,
-                  fontWeight: FontWeight(commonFontWeight),
-                  color: oldItem == dummyOperation
-                      ? Colors.transparent
-                      : Colors.black,
-                ),
-              ),
+              child: QuestionWidget(relatedQuestion: oldItem),
             ),
           );
         },

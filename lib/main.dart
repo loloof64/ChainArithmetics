@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
+import 'package:chain_arithmetics/widgets/constants.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 
 import 'package:flutter/material.dart';
@@ -40,7 +44,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   StandardGenerator _currentOperations = StandardGenerator.generate();
   int _firstOperationIndex = 0;
+  int? _previousAnswer;
   List<Operation> _bufferQuestions = [];
+
+  final Random _tempRandom = Random();
 
   @override
   void initState() {
@@ -52,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _currentOperations = StandardGenerator.generate();
       _firstOperationIndex = 0;
+      _previousAnswer = null;
     });
     _updateBuffer();
   }
@@ -80,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (_firstOperationIndex < _currentOperations.relatedOperations().length) {
       setState(() {
         _firstOperationIndex++;
+        _previousAnswer = _tempRandom.nextInt(15) + 2;
       });
       _updateBuffer();
     }
@@ -98,6 +107,12 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            if (_firstOperationIndex > 0 && _previousAnswer != null)
+              QuestionAnswerWidget(
+                operation: _currentOperations
+                    .relatedOperations()[_firstOperationIndex - 1],
+                userAnswer: _previousAnswer!,
+              ),
             QuestionsBufferWidget(
               questions: _bufferQuestions,
               capacity: maxBufferOperations,
