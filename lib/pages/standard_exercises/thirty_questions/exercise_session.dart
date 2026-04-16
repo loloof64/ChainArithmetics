@@ -26,6 +26,7 @@ class _ThirtyQuestionsStandardPageState
   int _firstOperationIndex = 0;
   int? _previousAnswer;
   int _currentAnswer = 0;
+  int _penaltiesCount = 0;
   bool _timeout = false;
   List<Operation> _bufferQuestions = [];
   List<int> _answers = [];
@@ -53,6 +54,7 @@ class _ThirtyQuestionsStandardPageState
       _firstOperationIndex = 0;
       _previousAnswer = null;
       _timeout = false;
+      _penaltiesCount = 0;
       _remainingSeconds = 60;
     });
     _updateBuffer();
@@ -74,6 +76,43 @@ class _ThirtyQuestionsStandardPageState
         timer.cancel();
       }
     });
+  }
+
+  void showQuickTooltip(
+    BuildContext context,
+    String message,
+    Offset position,
+    Color backgroundColor,
+    Duration duration,
+  ) {
+    final overlay = Overlay.of(context);
+    final entry = OverlayEntry(
+      builder: (context) => Positioned(
+        left: position.dx,
+        top: position.dy,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                message,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    overlay.insert(entry);
+    Future.delayed(duration, entry.remove);
   }
 
   Future<void> _playTimeoutSound() async {
@@ -146,6 +185,18 @@ class _ThirtyQuestionsStandardPageState
         await _playSuccessSound();
       } else {
         await _playWrongSound();
+        if (!context.mounted) return;
+        showQuickTooltip(
+          context,
+          "2s",
+          Offset(300, 100),
+          Colors.red,
+          Duration(milliseconds: 600),
+        );
+        setState(() {
+          _penaltiesCount -= penaltyTimeSeconds;
+          _remainingSeconds -= penaltyTimeSeconds;
+        });
       }
       setState(() {
         _firstOperationIndex++;
@@ -162,6 +213,7 @@ class _ThirtyQuestionsStandardPageState
           builder: (ctx2) {
             return SummaryPage(
               remainingTimeSeconds: _remainingSeconds,
+              penaltyCount: _penaltiesCount,
               questions: _currentOperations.relatedOperations(),
               userAnswers: _answers,
             );

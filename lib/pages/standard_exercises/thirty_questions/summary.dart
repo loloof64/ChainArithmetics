@@ -1,15 +1,18 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
 import 'package:flutter/material.dart';
 
 class SummaryPage extends StatelessWidget {
   final int remainingTimeSeconds;
+  final int penaltyCount;
   final List<Operation> questions;
   final List<int> userAnswers;
 
   const SummaryPage({
     super.key,
     required this.remainingTimeSeconds,
+    required this.penaltyCount,
     required this.questions,
     required this.userAnswers,
   });
@@ -33,6 +36,9 @@ class SummaryPage extends StatelessWidget {
               "Remaining time : $remainingTimeSeconds s",
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+          Text(
+            "Penalty: $penaltyCount * ${penaltyTimeSeconds}s = ${penaltyCount * penaltyTimeSeconds}",
+          ),
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
