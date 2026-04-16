@@ -77,14 +77,17 @@ class _ThirtyQuestionsStandardPageState
   }
 
   Future<void> _playTimeoutSound() async {
+    await _audioPlayer.stop();
     await _audioPlayer.play(AssetSource('sounds/timeout.wav'));
   }
 
   Future<void> _playSuccessSound() async {
+    await _audioPlayer.stop();
     await _audioPlayer.play(AssetSource('sounds/correct.wav'));
   }
 
   Future<void> _playWrongSound() async {
+    await _audioPlayer.stop();
     await _audioPlayer.play(AssetSource('sounds/wrong.wav'));
   }
 
