@@ -10,6 +10,11 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 
+const flagTooltipDurationMs = 650;
+const penaltyTooltipDurationMs = 600;
+final flagTooltipOffset = Offset(30, 100);
+final penaltyTooltipOffset = Offset(300, 100);
+
 class ThirtyQuestionsStandardPage extends StatefulWidget {
   const ThirtyQuestionsStandardPage({super.key});
 
@@ -91,13 +96,14 @@ class _ThirtyQuestionsStandardPageState
     });
   }
 
-  void showQuickTooltip(
-    BuildContext context,
-    String message,
-    Offset position,
-    Color backgroundColor,
-    Duration duration,
-  ) {
+  void _showQuickTooltip({
+    required BuildContext context,
+    required String message,
+    required Offset position,
+    required Color backgroundColor,
+    required Duration duration,
+    IconData? leadingIcon,
+  }) {
     final overlay = Overlay.of(context);
     final entry = OverlayEntry(
       builder: (context) => Positioned(
@@ -112,12 +118,17 @@ class _ThirtyQuestionsStandardPageState
               shape: BoxShape.circle,
             ),
             child: Center(
-              child: Text(
-                message,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                children: [
+                  if (leadingIcon != null) Icon(leadingIcon),
+                  Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -199,12 +210,12 @@ class _ThirtyQuestionsStandardPageState
       } else {
         await _playWrongSound();
         if (!context.mounted) return;
-        showQuickTooltip(
-          context,
-          "2s",
-          Offset(300, 100),
-          Colors.red,
-          Duration(milliseconds: 600),
+        _showQuickTooltip(
+          context: context,
+          message: "2s",
+          position: penaltyTooltipOffset,
+          backgroundColor: Colors.red,
+          duration: Duration(milliseconds: penaltyTooltipDurationMs),
         );
         setState(() {
           _penaltiesCount++;
@@ -216,6 +227,17 @@ class _ThirtyQuestionsStandardPageState
         _previousAnswer = _currentAnswer;
         _currentAnswer = 0;
       });
+      if (_firstOperationIndex % 5 == 0) {
+        if (!context.mounted) return;
+        _showQuickTooltip(
+          context: context,
+          message: _firstOperationIndex.toString(),
+          position: flagTooltipOffset,
+          backgroundColor: Colors.grey,
+          duration: Duration(milliseconds: flagTooltipDurationMs),
+          leadingIcon: Icons.flag,
+        );
+      }
       _updateBuffer();
     }
     if (_isExerciseOver()) {
