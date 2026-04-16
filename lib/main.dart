@@ -1,6 +1,9 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 import 'package:flutter/material.dart';
+
+const maxBufferOperations = 6;
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +32,51 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   StandardGenerator _currentOperations = StandardGenerator.generate();
+  int _firstOperationIndex = 0;
+  List<Operation> _bufferQuestions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _generateExercise();
+  }
+
+  void _generateExercise() {
+    setState(() {
+      _currentOperations = StandardGenerator.generate();
+      _firstOperationIndex = 0;
+    });
+    _updateBuffer();
+  }
+
+  void _updateBuffer() {
+    setState(() {
+      _bufferQuestions = [];
+      final operationsCount = _currentOperations.relatedOperations().length;
+      for (
+        var i = 0;
+        (i < maxBufferOperations) &&
+            (_firstOperationIndex + i < operationsCount);
+        i++
+      ) {
+        final currentQuestion = _currentOperations
+            .relatedOperations()[_firstOperationIndex + i];
+        _bufferQuestions.add(currentQuestion);
+      }
+      while (_bufferQuestions.length < maxBufferOperations) {
+        _bufferQuestions.add(dummyOperation);
+      }
+    });
+  }
+
+  void _gotoNextQuestion() {
+    if (_firstOperationIndex < _currentOperations.relatedOperations().length) {
+      setState(() {
+        _firstOperationIndex++;
+      });
+      _updateBuffer();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +88,29 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: [
-            Text(_currentOperations.questionRepr()),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _currentOperations = StandardGenerator.generate();
-                });
-              },
-              child: Text("Change exercise"),
+            QuestionsBufferWidget(
+              questions: _bufferQuestions,
+              capacity: maxBufferOperations,
+            ),
+            Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      _generateExercise();
+                    },
+                    child: Text("Change exercise"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _gotoNextQuestion();
+                    },
+                    child: Text("Next question"),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

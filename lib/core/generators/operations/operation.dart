@@ -21,7 +21,7 @@ class Operation {
   final int result;
   final Operator relatedOperator;
 
-  Operation._({
+  Operation({
     required this.operand_1,
     required this.operand_2,
     required this.result,
@@ -32,12 +32,29 @@ class Operation {
     return "$operand_1 ${relatedOperator.stringRepr()} $operand_2 = ";
   }
 
+  @override
+  bool operator ==(Object other) {
+    if (other is! Operation) return false;
+    final otherOp = other;
+    return otherOp.operand_1 == operand_1 &&
+        otherOp.operand_2 == operand_2 &&
+        otherOp.relatedOperator == relatedOperator &&
+        otherOp.result == result;
+  }
+
+  @override
+  int get hashCode =>
+      operand_1 +
+      100 * operand_2 +
+      10000 * result +
+      1000000 * relatedOperator.hashCode;
+
   factory Operation.randomAddition() {
     final oper1 = _random.nextInt(8) + 2;
     final oper2 = _random.nextInt(8) + 2;
     final result = oper1 + oper2;
 
-    return Operation._(
+    return Operation(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
@@ -50,7 +67,7 @@ class Operation {
     final result = _random.nextInt(8) + 2;
     final oper1 = oper2 + result;
 
-    return Operation._(
+    return Operation(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
@@ -63,7 +80,7 @@ class Operation {
     final oper2 = _random.nextInt(8) + 2;
     final result = oper1 * oper2;
 
-    return Operation._(
+    return Operation(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
@@ -76,7 +93,7 @@ class Operation {
     final result = _random.nextInt(8) + 2;
     final oper1 = oper2 * result;
 
-    return Operation._(
+    return Operation(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
