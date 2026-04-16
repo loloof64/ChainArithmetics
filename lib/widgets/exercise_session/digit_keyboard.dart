@@ -4,8 +4,13 @@ const singleButtonSize = 60.0;
 
 class DigitalKeyboardWidget extends StatelessWidget {
   final void Function(int digit) insertDigit;
+  final void Function() clearSelection;
 
-  const DigitalKeyboardWidget({super.key, required this.insertDigit});
+  const DigitalKeyboardWidget({
+    super.key,
+    required this.insertDigit,
+    required this.clearSelection,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +49,21 @@ class DigitalKeyboardWidget extends StatelessWidget {
                 SingleButtonWidget(relatedDigit: 8, callback: insertDigit),
                 SingleButtonWidget(relatedDigit: 9, callback: insertDigit),
               ],
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: Size(singleButtonSize, singleButtonSize),
+              backgroundColor: Colors.red,
+            ),
+            onPressed: clearSelection,
+            child: Text(
+              "C",
+              style: TextStyle(
+                color: Colors.white,
+                backgroundColor: Colors.red,
+              ),
             ),
           ),
         ],

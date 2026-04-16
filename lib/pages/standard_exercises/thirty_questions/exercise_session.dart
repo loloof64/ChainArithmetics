@@ -259,6 +259,12 @@ class _ThirtyQuestionsStandardPageState
     }
   }
 
+  void _clearSelection() {
+    setState(() {
+      _currentAnswer = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -283,6 +289,14 @@ class _ThirtyQuestionsStandardPageState
                       userAnswer: _previousAnswer!,
                     ),
                   ),
+                Text(
+                  _currentAnswer > 0 ? _currentAnswer.toString() : "_",
+                  style: TextStyle(
+                    fontSize: commonFontSize,
+                    fontWeight: FontWeight(commonFontWeight),
+                    color: Colors.black,
+                  ),
+                ),
                 Container(
                   color: Colors.blue.shade200,
                   child: QuestionsBufferWidget(
@@ -345,6 +359,7 @@ class _ThirtyQuestionsStandardPageState
                           DigitalKeyboardWidget(
                             insertDigit: (digit) =>
                                 _insertDigit(digit, context),
+                            clearSelection: _clearSelection,
                           ),
                         ],
                       ),
