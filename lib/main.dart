@@ -1,11 +1,18 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const maxBufferOperations = 5;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(const MyApp());
 }
 
