@@ -1,5 +1,7 @@
 # Chain arithmetics
 
+[![Main Workflow](https://github.com/loloof64/ChainArithmetics/actions/workflows/main_workflow.yml/badge.svg)](https://github.com/loloof64/ChainArithmetics/actions/workflows/main_workflow.yml)
+
 Simple arithmetic, but be very fast.
 
 There are two types of computation : guess the result and guess the missing operator.
