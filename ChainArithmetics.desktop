@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.2.17
+Name=Chain Arithmetics
+Comment=Simple arithmetics, but be fast.
+Exec=chain_arithmetics
+Icon=icon
+Terminal=false
+Categories=Games;

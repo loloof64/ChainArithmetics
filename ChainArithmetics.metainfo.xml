@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.loloof64.chain_arithmetics</id>
+  
+  <name>Chain arithmetics</name>
+  <summary>Fast arithmetics: but be fast.</summary>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  
+  <description>
+    <p>
+      Compute simple arithmetics as fast as you can.
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">ChainArithmetics.desktop</launchable>
+  <screenshots>
+  </screenshots>
+</component>
