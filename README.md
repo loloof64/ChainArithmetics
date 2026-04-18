@@ -7,7 +7,7 @@ Simple arithmetic, but be very fast.
 There are two types of computation : guess the result and guess the missing operator.
 And for each type of computation, you can either try to answer 35 questions in 1 minute, or try to answer 100 questions under 5 minutes.
 
-## For developers
+## For developers
 
 ### Linux dependencies
 
@@ -46,9 +46,9 @@ storeFile=<keystore-file-location>
 
 4. Run `flutter build appbundle`
 
-## Credits
+## Credits
 
-### Sounds
+### Sounds
 
 Got sounds from [FreeSound](https://freesound.org/)
 
