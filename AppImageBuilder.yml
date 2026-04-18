@@ -47,6 +47,7 @@ AppDir:
       - gdk-pixbuf2.0
       - librsvg2-common
       - adwaita-icon-theme
+      - libunwind-dev
       - libgstreamer1.0-dev
       - libgstreamer-plugins-base1.0-dev
     exclude:
