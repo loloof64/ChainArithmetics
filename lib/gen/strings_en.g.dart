@@ -69,8 +69,10 @@ class TranslationsPagesCommonEn {
 	/// en: 'Remaining time : $remainingTimeSec s'
 	String remaining_time({required Object remainingTimeSec}) => 'Remaining time : ${remainingTimeSec} s';
 
-	/// en: 'Penalty: $penaltyCount * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s'
-	String penalty({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalty: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s';
+	/// en: 'Elapsed time : ${elapsedMinutes}m ${elapedSeconds}s'
+	String elapsed_time({required Object elapsedMinutes, required Object elapedSeconds}) => 'Elapsed time : ${elapsedMinutes}m ${elapedSeconds}s';
+
+	late final TranslationsPagesCommonPenaltyEn penalty = TranslationsPagesCommonPenaltyEn._(_root);
 }
 
 // Path: pages.home
@@ -97,6 +99,21 @@ class TranslationsPagesStandardExercisesEn {
 	late final TranslationsPagesStandardExercisesHomeEn home = TranslationsPagesStandardExercisesHomeEn._(_root);
 	late final TranslationsPagesStandardExercisesThirtyQuestionsEn thirtyQuestions = TranslationsPagesStandardExercisesThirtyQuestionsEn._(_root);
 	late final TranslationsPagesStandardExercisesOneHundredQuestionsEn oneHundredQuestions = TranslationsPagesStandardExercisesOneHundredQuestionsEn._(_root);
+}
+
+// Path: pages.common.penalty
+class TranslationsPagesCommonPenaltyEn {
+	TranslationsPagesCommonPenaltyEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Penalty: $penaltyCount * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s'
+	String one_minute_mode({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalty: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s';
+
+	/// en: 'Penalty: $penaltyCount * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s'
+	String one_hundred_questions_mode({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeMinutes, required Object totalPenaltyTimeSeconds}) => 'Penalty: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s';
 }
 
 // Path: pages.home.buttons
@@ -137,8 +154,8 @@ class TranslationsPagesStandardExercisesThirtyQuestionsEn {
 
 	// Translations
 
-	/// en: 'Calculation: 35 questions / 1 min'
-	String get title => 'Calculation: 35 questions / 1 min';
+	/// en: 'Calculation: $oneMinuteModeQuestionsCount questions / 1 min'
+	String title({required Object oneMinuteModeQuestionsCount}) => 'Calculation: ${oneMinuteModeQuestionsCount} questions / 1 min';
 }
 
 // Path: pages.standard_exercises.oneHundredQuestions
@@ -163,13 +180,15 @@ extension on Translations {
 		return switch (path) {
 			'pages.common.timeout' => 'Timeout !',
 			'pages.common.remaining_time' => ({required Object remainingTimeSec}) => 'Remaining time : ${remainingTimeSec} s',
-			'pages.common.penalty' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalty: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s',
+			'pages.common.elapsed_time' => ({required Object elapsedMinutes, required Object elapedSeconds}) => 'Elapsed time : ${elapsedMinutes}m ${elapedSeconds}s',
+			'pages.common.penalty.one_minute_mode' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalty: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s',
+			'pages.common.penalty.one_hundred_questions_mode' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeMinutes, required Object totalPenaltyTimeSeconds}) => 'Penalty: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s',
 			'pages.home.title' => 'Home',
 			'pages.home.buttons.standard_exercises' => 'Standard',
 			'pages.standard_exercises.home.title' => 'Standard calculation',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => '1 min questions',
 			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 questions',
-			'pages.standard_exercises.thirtyQuestions.title' => 'Calculation: 35 questions / 1 min',
+			'pages.standard_exercises.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Calculation: ${oneMinuteModeQuestionsCount} questions / 1 min',
 			'pages.standard_exercises.oneHundredQuestions.title' => 'Calculation: 100 questions',
 			_ => null,
 		};

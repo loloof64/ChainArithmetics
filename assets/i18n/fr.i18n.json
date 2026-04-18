@@ -3,7 +3,11 @@
     "common": {
       "timeout": "Temps écoulé !",
       "remaining_time": "Temps restant : $remainingTimeSec s",
-      "penalty": "Penalité: $penaltyCount * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s"
+      "elapsed_time": "Temps utilisé : ${elapsedMinutes}m ${elapedSeconds}s",
+      "penalty": {
+        "one_minute_mode": "Pénalité: $penaltyCount * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s",
+        "one_hundred_questions_mode": "Pénalité: $penaltyCount * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s"
+      }
     },
     "home": {
       "title": "Accueil",
@@ -18,7 +22,7 @@
         "gotoOneHundredQuestions": "100 questions"
       },
       "thirtyQuestions": {
-        "title": "Calcul: 35 questions / 1 min"
+        "title": "Calcul: $oneMinuteModeQuestionsCount questions / 1 min"
       },
       "oneHundredQuestions": {
         "title": "Calcul: 100 questions"

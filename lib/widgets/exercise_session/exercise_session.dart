@@ -12,14 +12,17 @@ import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart'
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 import 'package:flutter/material.dart';
 
-const flagTooltipDurationMs = 800;
-const penaltyTooltipDurationMs = 600;
-final flagTooltipOffset = Offset(30, 100);
-final penaltyTooltipOffset = Offset(300, 100);
+enum Mode { oneMinute, questionsCount100 }
 
 class ExerciseSessionWidget extends StatefulWidget {
   final String title;
-  const ExerciseSessionWidget({super.key, required this.title});
+  final Mode mode;
+
+  const ExerciseSessionWidget({
+    super.key,
+    required this.title,
+    required this.mode,
+  });
 
   @override
   State<ExerciseSessionWidget> createState() => _ExerciseSessionWidgetState();
@@ -27,8 +30,10 @@ class ExerciseSessionWidget extends StatefulWidget {
 
 class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
   Timer? _timer;
-  int _remainingSeconds = 60;
-  StandardGenerator _currentOperations = StandardGenerator.generate();
+  int _timeInSeconds = 60;
+  StandardGenerator _currentOperations = StandardGenerator.generate(
+    Mode.oneMinute,
+  );
   int _firstOperationIndex = 0;
   int? _previousAnswer;
   int _currentAnswer = 0;
@@ -55,13 +60,13 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
   void _generateExercise() {
     _timer?.cancel();
     setState(() {
-      _currentOperations = StandardGenerator.generate();
+      _currentOperations = StandardGenerator.generate(widget.mode);
       _answers = [];
       _firstOperationIndex = 0;
       _previousAnswer = null;
       _timeout = false;
       _penaltiesCount = 0;
-      _remainingSeconds = 60;
+      _timeInSeconds = widget.mode == Mode.oneMinute ? 60 : 0;
     });
     _updateBuffer();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
@@ -69,11 +74,11 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
         timer.cancel();
         return;
       }
-      if (_remainingSeconds > 0) {
-        setState(() {
-          _remainingSeconds--;
-        });
-      } else {
+      final timeout =
+          (widget.mode == Mode.oneMinute && _timeInSeconds <= 0) ||
+          ((widget.mode == Mode.questionsCount100) &&
+              (_timeInSeconds >= (60 * maxAllocatedTimeMinutes)));
+      if (timeout) {
         setState(() {
           _timeout = true;
         });
@@ -85,14 +90,19 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
             builder: (ctx2) {
               return SummaryPage(
                 title: widget.title,
-                remainingTimeSeconds: _remainingSeconds,
+                lastTimeStateSeconds: _timeInSeconds,
                 penaltyCount: _penaltiesCount,
                 questions: _currentOperations.relatedOperations(),
                 userAnswers: _answers,
+                mode: widget.mode,
               );
             },
           ),
         );
+      } else {
+        setState(() {
+          _timeInSeconds += widget.mode == Mode.oneMinute ? -1 : 1;
+        });
       }
     });
   }
@@ -220,7 +230,8 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
         );
         setState(() {
           _penaltiesCount++;
-          _remainingSeconds -= penaltyTimeSeconds;
+          _timeInSeconds +=
+              penaltyTimeSeconds * (widget.mode == Mode.oneMinute ? -1 : 1);
         });
       }
       setState(() {
@@ -249,10 +260,11 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
           builder: (ctx2) {
             return SummaryPage(
               title: widget.title,
-              remainingTimeSeconds: _remainingSeconds,
+              lastTimeStateSeconds: _timeInSeconds,
               penaltyCount: _penaltiesCount,
               questions: _currentOperations.relatedOperations(),
               userAnswers: _answers,
+              mode: widget.mode,
             );
           },
         ),
@@ -264,6 +276,18 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
     setState(() {
       _currentAnswer = 0;
     });
+  }
+
+  String timeString() {
+    if (widget.mode == Mode.oneMinute) {
+      return t.pages.common.remaining_time(remainingTimeSec: _timeInSeconds);
+    }
+    final timeMinutes = (_timeInSeconds / 60).floor();
+    final timeSeconds = _timeInSeconds % 60;
+    return t.pages.common.elapsed_time(
+      elapsedMinutes: timeMinutes,
+      elapedSeconds: timeSeconds,
+    );
   }
 
   @override
@@ -307,65 +331,32 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
                 ),
               ],
             ),
-            _isExerciseOver()
-                ? Center(
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.white.withAlpha(210),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (_timeout)
-                            Text(
-                              t.pages.common.timeout,
-                              style: TextStyle(fontSize: 30),
-                            ),
-                          if (!_timeout)
-                            Text(
-                              t.pages.common.remaining_time(
-                                remainingTimeSec: _remainingSeconds,
-                              ),
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                        ],
+            Container(
+              height: double.infinity,
+              color: Colors.white.withAlpha(210),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        timeString(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  )
-                : Container(
-                    height: double.infinity,
-                    color: Colors.white.withAlpha(210),
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              t.pages.common.remaining_time(
-                                remainingTimeSec: _remainingSeconds,
-                              ),
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          DigitalKeyboardWidget(
-                            insertDigit: (digit) =>
-                                _insertDigit(digit, context),
-                            clearSelection: _clearSelection,
-                          ),
-                        ],
-                      ),
+                    DigitalKeyboardWidget(
+                      insertDigit: (digit) => _insertDigit(digit, context),
+                      clearSelection: _clearSelection,
                     ),
-                  ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

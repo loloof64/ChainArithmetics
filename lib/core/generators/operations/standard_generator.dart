@@ -1,6 +1,6 @@
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
-
-const questionsCount = 35;
+import 'package:chain_arithmetics/widgets/constants.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/exercise_session.dart';
 
 class StandardGenerator {
   final List<Operation> operations;
@@ -13,7 +13,10 @@ class StandardGenerator {
     return operations.map((e) => e.questionRepr()).join("\n");
   }
 
-  factory StandardGenerator.generate() {
+  factory StandardGenerator.generate(Mode mode) {
+    final questionsCount = mode == Mode.oneMinute
+        ? oneMinuteModeQuestionsCount
+        : 100;
     var operationsList = <Operation>[];
     for (var i = 0; i < questionsCount; i++) {
       operationsList.add(Operation.randomOperation());

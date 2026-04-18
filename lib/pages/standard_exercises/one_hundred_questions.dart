@@ -9,6 +9,7 @@ class OneHundredQuestionsStandardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExerciseSessionWidget(
       title: t.pages.standard_exercises.oneHundredQuestions.title,
+      mode: Mode.questionsCount100,
     );
   }
 }

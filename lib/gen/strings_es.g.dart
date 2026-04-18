@@ -61,7 +61,8 @@ class _TranslationsPagesCommonEs implements TranslationsPagesCommonEn {
 	// Translations
 	@override String get timeout => '¡Tiempo agotado!';
 	@override String remaining_time({required Object remainingTimeSec}) => 'Tiempo restante: ${remainingTimeSec} s';
-	@override String penalty({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalización: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s';
+	@override String elapsed_time({required Object elapsedMinutes, required Object elapedSeconds}) => 'Tiempo transcurrido: ${elapsedMinutes}m ${elapedSeconds}s';
+	@override late final _TranslationsPagesCommonPenaltyEs penalty = _TranslationsPagesCommonPenaltyEs._(_root);
 }
 
 // Path: pages.home
@@ -85,6 +86,17 @@ class _TranslationsPagesStandardExercisesEs implements TranslationsPagesStandard
 	@override late final _TranslationsPagesStandardExercisesHomeEs home = _TranslationsPagesStandardExercisesHomeEs._(_root);
 	@override late final _TranslationsPagesStandardExercisesThirtyQuestionsEs thirtyQuestions = _TranslationsPagesStandardExercisesThirtyQuestionsEs._(_root);
 	@override late final _TranslationsPagesStandardExercisesOneHundredQuestionsEs oneHundredQuestions = _TranslationsPagesStandardExercisesOneHundredQuestionsEs._(_root);
+}
+
+// Path: pages.common.penalty
+class _TranslationsPagesCommonPenaltyEs implements TranslationsPagesCommonPenaltyEn {
+	_TranslationsPagesCommonPenaltyEs._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String one_minute_mode({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalización: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s';
+	@override String one_hundred_questions_mode({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeMinutes, required Object totalPenaltyTimeSeconds}) => 'Penalización: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s';
 }
 
 // Path: pages.home.buttons
@@ -116,7 +128,7 @@ class _TranslationsPagesStandardExercisesThirtyQuestionsEs implements Translatio
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Cálculo: 35 preguntas / 1 min';
+	@override String title({required Object oneMinuteModeQuestionsCount}) => 'Cálculo: ${oneMinuteModeQuestionsCount} preguntas / 1 min';
 }
 
 // Path: pages.standard_exercises.oneHundredQuestions
@@ -139,13 +151,15 @@ extension on TranslationsEs {
 		return switch (path) {
 			'pages.common.timeout' => '¡Tiempo agotado!',
 			'pages.common.remaining_time' => ({required Object remainingTimeSec}) => 'Tiempo restante: ${remainingTimeSec} s',
-			'pages.common.penalty' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalización: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s',
+			'pages.common.elapsed_time' => ({required Object elapsedMinutes, required Object elapedSeconds}) => 'Tiempo transcurrido: ${elapsedMinutes}m ${elapedSeconds}s',
+			'pages.common.penalty.one_minute_mode' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeSeconds}) => 'Penalización: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeSeconds}s',
+			'pages.common.penalty.one_hundred_questions_mode' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeMinutes, required Object totalPenaltyTimeSeconds}) => 'Penalización: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s',
 			'pages.home.title' => 'Inicio',
 			'pages.home.buttons.standard_exercises' => 'Estándar',
 			'pages.standard_exercises.home.title' => 'Cálculo estándar',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => 'Preguntas sobre 1 min',
 			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 preguntas',
-			'pages.standard_exercises.thirtyQuestions.title' => 'Cálculo: 35 preguntas / 1 min',
+			'pages.standard_exercises.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Cálculo: ${oneMinuteModeQuestionsCount} preguntas / 1 min',
 			'pages.standard_exercises.oneHundredQuestions.title' => 'Cálculo: 100 preguntas ',
 			_ => null,
 		};
