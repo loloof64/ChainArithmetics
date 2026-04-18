@@ -1,6 +1,5 @@
+import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:flutter/material.dart';
-
-const singleButtonSize = 60.0;
 
 class DigitalKeyboardWidget extends StatelessWidget {
   final void Function(int digit) insertDigit;
@@ -28,11 +27,11 @@ class DigitalKeyboardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               spacing: 5,
               children: [
-                SingleButtonWidget(relatedDigit: 0, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 1, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 2, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 3, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 4, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 0, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 1, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 2, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 3, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 4, callback: insertDigit),
               ],
             ),
           ),
@@ -43,18 +42,21 @@ class DigitalKeyboardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               spacing: 5,
               children: [
-                SingleButtonWidget(relatedDigit: 5, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 6, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 7, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 8, callback: insertDigit),
-                SingleButtonWidget(relatedDigit: 9, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 5, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 6, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 7, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 8, callback: insertDigit),
+                _SingleButtonWidget(relatedDigit: 9, callback: insertDigit),
               ],
             ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.zero,
-              minimumSize: Size(singleButtonSize, singleButtonSize),
+              minimumSize: Size(
+                singleKeyboardButtonSize,
+                singleKeyboardButtonSize,
+              ),
               backgroundColor: Colors.red,
             ),
             onPressed: clearSelection,
@@ -72,12 +74,11 @@ class DigitalKeyboardWidget extends StatelessWidget {
   }
 }
 
-class SingleButtonWidget extends StatelessWidget {
+class _SingleButtonWidget extends StatelessWidget {
   final int relatedDigit;
   final void Function(int digit) callback;
 
-  const SingleButtonWidget({
-    super.key,
+  const _SingleButtonWidget({
     required this.relatedDigit,
     required this.callback,
   });
@@ -87,7 +88,7 @@ class SingleButtonWidget extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
-        minimumSize: Size(singleButtonSize, singleButtonSize),
+        minimumSize: Size(singleKeyboardButtonSize, singleKeyboardButtonSize),
         backgroundColor: Colors.green,
       ),
       onPressed: () => callback(relatedDigit),

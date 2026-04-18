@@ -1,17 +1,21 @@
+import 'package:chain_arithmetics/core/generators/common.dart';
+import 'package:chain_arithmetics/core/generators/guess_operators/guess_operator.dart';
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/gen/strings.g.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/exercise_session.dart';
-import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/guess_operator_answer.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/operation_answer.dart';
 import 'package:flutter/material.dart';
 
 class SummaryPage extends StatelessWidget {
   final int lastTimeStateSeconds;
   final int penaltyCount;
-  final List<Operation> questions;
-  final List<int> userAnswers;
+  final List<Question> questions;
+  final List<String> userAnswers;
   final String title;
   final Mode mode;
+  final Type type;
 
   const SummaryPage({
     super.key,
@@ -21,6 +25,7 @@ class SummaryPage extends StatelessWidget {
     required this.questions,
     required this.userAnswers,
     required this.mode,
+    required this.type,
   });
 
   String timeString() {
@@ -86,14 +91,19 @@ class SummaryPage extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemBuilder: (context, index) {
-                final currentOperation = questions[index];
+                final currentQuestion = questions[index];
                 final currentAnswer = index >= userAnswers.length
-                    ? null
+                    ? ""
                     : userAnswers[index];
-                return QuestionAnswerWidget(
-                  operation: currentOperation,
-                  userAnswer: currentAnswer,
-                );
+                return type == Type.numbers
+                    ? OperationAnswerWidget(
+                        operation: currentQuestion as Operation,
+                        userAnswer: currentAnswer,
+                      )
+                    : GuessOperatorAnswerWidget(
+                        guessOperator: currentQuestion as GuessOperator,
+                        userAnswer: currentAnswer,
+                      );
               },
               itemCount: questions.length,
             ),

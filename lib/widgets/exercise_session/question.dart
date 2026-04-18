@@ -1,9 +1,9 @@
-import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/core/generators/common.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatelessWidget {
-  final Operation relatedQuestion;
+  final Question relatedQuestion;
 
   const QuestionWidget({super.key, required this.relatedQuestion});
 
@@ -14,7 +14,7 @@ class QuestionWidget extends StatelessWidget {
       style: TextStyle(
         fontSize: commonFontSize,
         fontWeight: FontWeight(commonFontWeight),
-        color: relatedQuestion == dummyOperation
+        color: relatedQuestion is DummyQuestion
             ? Colors.transparent
             : Colors.black,
       ),

@@ -1,25 +1,25 @@
-import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/core/generators/guess_operators/guess_operator.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:flutter/material.dart';
 
-class QuestionAnswerWidget extends StatelessWidget {
-  final Operation operation;
-  final int? userAnswer;
+class GuessOperatorAnswerWidget extends StatelessWidget {
+  final GuessOperator guessOperator;
+  final String? userAnswer;
 
-  const QuestionAnswerWidget({
+  const GuessOperatorAnswerWidget({
     super.key,
-    required this.operation,
+    required this.guessOperator,
     required this.userAnswer,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isRightAnswer = operation.result == userAnswer;
+    final isRightAnswer = guessOperator.isCorrectAnswer(userAnswer ?? "");
     return RichText(
       text: TextSpan(
         children: [
           TextSpan(
-            text: operation.questionRepr(),
+            text: guessOperator.answerReprPart1(),
             style: TextStyle(
               fontSize: commonFontSize,
               fontWeight: FontWeight(commonFontWeight),
@@ -28,7 +28,7 @@ class QuestionAnswerWidget extends StatelessWidget {
           ),
           if (isRightAnswer)
             TextSpan(
-              text: operation.result.toString(),
+              text: userAnswer!,
               style: TextStyle(
                 fontSize: commonFontSize,
                 fontWeight: FontWeight(commonFontWeight),
@@ -37,25 +37,35 @@ class QuestionAnswerWidget extends StatelessWidget {
             ),
           if (!isRightAnswer)
             TextSpan(
-              text: userAnswer == null ? "__" : userAnswer.toString(),
+              text: (userAnswer == null || userAnswer!.isEmpty)
+                  ? "_"
+                  : userAnswer,
               style: TextStyle(
                 fontSize: commonFontSize,
                 fontWeight: FontWeight(commonFontWeight),
                 color: Colors.red,
-                decoration: userAnswer == null
+                decoration: (userAnswer == null || userAnswer!.isEmpty)
                     ? TextDecoration.none
-                    : TextDecoration.lineThrough,
+                    : TextDecoration.underline,
               ),
             ),
           if (!isRightAnswer)
             TextSpan(
-              text: " ${operation.result.toString()}",
+              text: " ${guessOperator.expectedOperator.stringRepr()}",
               style: TextStyle(
                 fontSize: commonFontSize,
                 fontWeight: FontWeight(commonFontWeight),
                 color: Colors.blue,
               ),
             ),
+          TextSpan(
+            text: guessOperator.answerReprPart2(),
+            style: TextStyle(
+              fontSize: commonFontSize,
+              fontWeight: FontWeight(commonFontWeight),
+              color: Colors.black,
+            ),
+          ),
         ],
       ),
     );

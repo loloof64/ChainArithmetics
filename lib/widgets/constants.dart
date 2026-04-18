@@ -1,4 +1,4 @@
-import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/core/generators/common.dart';
 import 'package:flutter/material.dart';
 
 const commonFontSize = 60.0;
@@ -6,12 +6,9 @@ const commonFontWeight = 900;
 const maxBufferOperations = 5;
 const penaltyTimeSeconds = 5;
 const oneMinuteModeQuestionsCount = 35;
-final dummyOperation = Operation(
-  operand_1: 0,
-  operand_2: 0,
-  result: 0,
-  relatedOperator: Operator.add,
-);
+const singleKeyboardButtonSize = 60.0;
+
+final dummyQuestion = DummyQuestion();
 
 const flagTooltipDurationMs = 1800;
 const penaltyTooltipDurationMs = 600;

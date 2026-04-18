@@ -1,27 +1,36 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:chain_arithmetics/core/generators/common.dart';
+import 'package:chain_arithmetics/core/generators/guess_operators/guess_operator.dart';
+import 'package:chain_arithmetics/core/generators/guess_operators/guess_operator_generator.dart';
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/core/generators/operations/standard_generator.dart';
 import 'package:chain_arithmetics/gen/strings.g.dart';
-import 'package:chain_arithmetics/pages/standard_exercises/summary.dart';
+import 'package:chain_arithmetics/pages/summary.dart';
 import 'package:chain_arithmetics/utils.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/digit_keyboard.dart';
-import 'package:chain_arithmetics/widgets/exercise_session/question_answer.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/guess_operator_answer.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/operation_answer.dart';
+import 'package:chain_arithmetics/widgets/exercise_session/operator_keyboard.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/questions_buffer.dart';
 import 'package:flutter/material.dart';
 
 enum Mode { oneMinute, questionsCount100 }
 
+enum Type { numbers, operators }
+
 class ExerciseSessionWidget extends StatefulWidget {
   final String title;
   final Mode mode;
+  final Type type;
 
   const ExerciseSessionWidget({
     super.key,
     required this.title,
     required this.mode,
+    required this.type,
   });
 
   @override
@@ -31,16 +40,14 @@ class ExerciseSessionWidget extends StatefulWidget {
 class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
   Timer? _timer;
   int _timeInSeconds = 60;
-  StandardGenerator _currentOperations = StandardGenerator.generate(
-    Mode.oneMinute,
-  );
+  Generator _currentQuestions = StandardGenerator.generate(Mode.oneMinute);
   int _firstOperationIndex = 0;
-  int? _previousAnswer;
-  int _currentAnswer = 0;
+  String? _previousAnswer;
+  String _currentAnswer = "";
   int _penaltiesCount = 0;
   bool _timeout = false;
-  List<Operation> _bufferQuestions = [];
-  List<int> _answers = [];
+  List<Question> _bufferQuestions = [];
+  List<String> _answers = [];
 
   final AudioPlayer _audioPlayer = AudioPlayer();
 
@@ -60,7 +67,9 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
   void _generateExercise() {
     _timer?.cancel();
     setState(() {
-      _currentOperations = StandardGenerator.generate(widget.mode);
+      _currentQuestions = widget.type == Type.numbers
+          ? StandardGenerator.generate(widget.mode)
+          : GuessOperatorGenerator.generate(widget.mode);
       _answers = [];
       _firstOperationIndex = 0;
       _previousAnswer = null;
@@ -92,9 +101,10 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
                 title: widget.title,
                 lastTimeStateSeconds: _timeInSeconds,
                 penaltyCount: _penaltiesCount,
-                questions: _currentOperations.relatedOperations(),
+                questions: _currentQuestions.relatedQuestions(),
                 userAnswers: _answers,
                 mode: widget.mode,
+                type: widget.type,
               );
             },
           ),
@@ -171,39 +181,40 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
   void _updateBuffer() {
     setState(() {
       _bufferQuestions = [];
-      final operationsCount = _currentOperations.relatedOperations().length;
+      final operationsCount = _currentQuestions.relatedQuestions().length;
       for (
         var i = 0;
         (i < maxBufferOperations) &&
             (_firstOperationIndex + i < operationsCount);
         i++
       ) {
-        final currentQuestion = _currentOperations
-            .relatedOperations()[_firstOperationIndex + i];
+        final currentQuestion = _currentQuestions
+            .relatedQuestions()[_firstOperationIndex + i];
         _bufferQuestions.add(currentQuestion);
       }
       while (_bufferQuestions.length < maxBufferOperations) {
-        _bufferQuestions.add(dummyOperation);
+        _bufferQuestions.add(dummyQuestion);
       }
     });
   }
 
   bool _isExerciseOver() {
-    return _firstOperationIndex >= _currentOperations.operations.length ||
+    return _firstOperationIndex >= _currentQuestions.questionsCount() ||
         _timeout;
   }
 
   void _insertDigit(int digit, BuildContext context) {
     if (_isExerciseOver()) return;
+    if (widget.type != Type.numbers) return;
 
     setState(() {
-      _currentAnswer *= 10;
-      _currentAnswer += digit;
+      _currentAnswer += digit.toString();
     });
-    final currentQuestion = _currentOperations
-        .relatedOperations()[_firstOperationIndex];
-    final expectedDigitsCount = numberOfDigits(currentQuestion.result);
-    final userAnswerDigitsCount = numberOfDigits(_currentAnswer);
+    final currentQuestion = _currentQuestions
+        .relatedQuestions()[_firstOperationIndex];
+    final currentOperation = currentQuestion as Operation;
+    final expectedDigitsCount = numberOfDigits(currentOperation.result);
+    final userAnswerDigitsCount = _currentAnswer.length;
 
     if (userAnswerDigitsCount >= expectedDigitsCount) {
       setState(() {
@@ -213,12 +224,26 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
     }
   }
 
+  void _validateOperator(Operator operator, BuildContext context) {
+    setState(() {
+      _currentAnswer = operator.stringRepr();
+      _answers.add(_currentAnswer);
+    });
+    _validateAnswer(context);
+  }
+
   void _validateAnswer(BuildContext context) async {
-    if (_firstOperationIndex < _currentOperations.relatedOperations().length) {
-      final expectedResult = _currentOperations
-          .relatedOperations()[_firstOperationIndex]
-          .result;
-      final isRightAnswer = expectedResult == _currentAnswer;
+    if (_firstOperationIndex < _currentQuestions.relatedQuestions().length) {
+      final currentQuestion = _currentQuestions
+          .relatedQuestions()[_firstOperationIndex];
+      final isRightAnswer =
+          (widget.type == Type.numbers &&
+              (currentQuestion as Operation).result.toString() ==
+                  _currentAnswer) ||
+          (widget.type == Type.operators &&
+              (currentQuestion as GuessOperator).expectedOperator
+                      .stringRepr() ==
+                  _currentAnswer);
       if (isRightAnswer) {
         await _playSuccessSound();
       } else {
@@ -240,7 +265,7 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
       setState(() {
         _firstOperationIndex++;
         _previousAnswer = _currentAnswer;
-        _currentAnswer = 0;
+        _currentAnswer = "";
       });
       if (_firstOperationIndex % 5 == 0) {
         if (!context.mounted) return;
@@ -266,9 +291,10 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
               title: widget.title,
               lastTimeStateSeconds: _timeInSeconds,
               penaltyCount: _penaltiesCount,
-              questions: _currentOperations.relatedOperations(),
+              questions: _currentQuestions.relatedQuestions(),
               userAnswers: _answers,
               mode: widget.mode,
+              type: widget.type,
             );
           },
         ),
@@ -278,7 +304,7 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
 
   void _clearSelection() {
     setState(() {
-      _currentAnswer = 0;
+      _currentAnswer = "";
     });
   }
 
@@ -312,20 +338,33 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
                 if (_firstOperationIndex > 0 && _previousAnswer != null)
                   Container(
                     color: Colors.brown.shade300,
-                    child: QuestionAnswerWidget(
-                      operation: _currentOperations
-                          .relatedOperations()[_firstOperationIndex - 1],
-                      userAnswer: _previousAnswer!,
+                    child: widget.type == Type.numbers
+                        ? OperationAnswerWidget(
+                            operation:
+                                _currentQuestions
+                                        .relatedQuestions()[_firstOperationIndex -
+                                        1]
+                                    as Operation,
+                            userAnswer: _previousAnswer!,
+                          )
+                        : GuessOperatorAnswerWidget(
+                            guessOperator:
+                                _currentQuestions
+                                        .relatedQuestions()[_firstOperationIndex -
+                                        1]
+                                    as GuessOperator,
+                            userAnswer: _previousAnswer!,
+                          ),
+                  ),
+                if (widget.type == Type.numbers)
+                  Text(
+                    _currentAnswer.isNotEmpty ? _currentAnswer : "_",
+                    style: TextStyle(
+                      fontSize: commonFontSize,
+                      fontWeight: FontWeight(commonFontWeight),
+                      color: Colors.black,
                     ),
                   ),
-                Text(
-                  _currentAnswer > 0 ? _currentAnswer.toString() : "_",
-                  style: TextStyle(
-                    fontSize: commonFontSize,
-                    fontWeight: FontWeight(commonFontWeight),
-                    color: Colors.black,
-                  ),
-                ),
                 Container(
                   color: Colors.blue.shade200,
                   child: QuestionsBufferWidget(
@@ -353,10 +392,16 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
                         ),
                       ),
                     ),
-                    DigitalKeyboardWidget(
-                      insertDigit: (digit) => _insertDigit(digit, context),
-                      clearSelection: _clearSelection,
-                    ),
+                    widget.type == Type.numbers
+                        ? DigitalKeyboardWidget(
+                            insertDigit: (digit) =>
+                                _insertDigit(digit, context),
+                            clearSelection: _clearSelection,
+                          )
+                        : OperatorKeyboardWidget(
+                            setOperator: (operator) =>
+                                _validateOperator(operator, context),
+                          ),
                   ],
                 ),
               ),

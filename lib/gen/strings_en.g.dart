@@ -53,6 +53,7 @@ class TranslationsPagesEn {
 	late final TranslationsPagesCommonEn common = TranslationsPagesCommonEn._(_root);
 	late final TranslationsPagesHomeEn home = TranslationsPagesHomeEn._(_root);
 	late final TranslationsPagesStandardExercisesEn standard_exercises = TranslationsPagesStandardExercisesEn._(_root);
+	late final TranslationsPagesGuessOperatorEn guess_operator = TranslationsPagesGuessOperatorEn._(_root);
 }
 
 // Path: pages.common
@@ -101,6 +102,18 @@ class TranslationsPagesStandardExercisesEn {
 	late final TranslationsPagesStandardExercisesOneHundredQuestionsEn oneHundredQuestions = TranslationsPagesStandardExercisesOneHundredQuestionsEn._(_root);
 }
 
+// Path: pages.guess_operator
+class TranslationsPagesGuessOperatorEn {
+	TranslationsPagesGuessOperatorEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final TranslationsPagesGuessOperatorHomeEn home = TranslationsPagesGuessOperatorHomeEn._(_root);
+	late final TranslationsPagesGuessOperatorThirtyQuestionsEn thirtyQuestions = TranslationsPagesGuessOperatorThirtyQuestionsEn._(_root);
+	late final TranslationsPagesGuessOperatorOneHundredQuestionsEn oneHundredQuestions = TranslationsPagesGuessOperatorOneHundredQuestionsEn._(_root);
+}
+
 // Path: pages.common.penalty
 class TranslationsPagesCommonPenaltyEn {
 	TranslationsPagesCommonPenaltyEn._(this._root);
@@ -126,6 +139,9 @@ class TranslationsPagesHomeButtonsEn {
 
 	/// en: 'Standard'
 	String get standard_exercises => 'Standard';
+
+	/// en: 'Guess operator'
+	String get guess_operator => 'Guess operator';
 }
 
 // Path: pages.standard_exercises.home
@@ -170,6 +186,48 @@ class TranslationsPagesStandardExercisesOneHundredQuestionsEn {
 	String get title => 'Calculation: 100 questions';
 }
 
+// Path: pages.guess_operator.home
+class TranslationsPagesGuessOperatorHomeEn {
+	TranslationsPagesGuessOperatorHomeEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Guess operator'
+	String get title => 'Guess operator';
+
+	/// en: '1 min questions'
+	String get gotoThirtyQuestions => '1 min questions';
+
+	/// en: '100 questions'
+	String get gotoOneHundredQuestions => '100 questions';
+}
+
+// Path: pages.guess_operator.thirtyQuestions
+class TranslationsPagesGuessOperatorThirtyQuestionsEn {
+	TranslationsPagesGuessOperatorThirtyQuestionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Guess operator: $oneMinuteModeQuestionsCount questions / 1 min'
+	String title({required Object oneMinuteModeQuestionsCount}) => 'Guess operator: ${oneMinuteModeQuestionsCount} questions / 1 min';
+}
+
+// Path: pages.guess_operator.oneHundredQuestions
+class TranslationsPagesGuessOperatorOneHundredQuestionsEn {
+	TranslationsPagesGuessOperatorOneHundredQuestionsEn._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Guess operator: 100 questions'
+	String get title => 'Guess operator: 100 questions';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -185,11 +243,17 @@ extension on Translations {
 			'pages.common.penalty.one_hundred_questions_mode' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeMinutes, required Object totalPenaltyTimeSeconds}) => 'Penalty: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s',
 			'pages.home.title' => 'Home',
 			'pages.home.buttons.standard_exercises' => 'Standard',
+			'pages.home.buttons.guess_operator' => 'Guess operator',
 			'pages.standard_exercises.home.title' => 'Standard calculation',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => '1 min questions',
 			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 questions',
 			'pages.standard_exercises.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Calculation: ${oneMinuteModeQuestionsCount} questions / 1 min',
 			'pages.standard_exercises.oneHundredQuestions.title' => 'Calculation: 100 questions',
+			'pages.guess_operator.home.title' => 'Guess operator',
+			'pages.guess_operator.home.gotoThirtyQuestions' => '1 min questions',
+			'pages.guess_operator.home.gotoOneHundredQuestions' => '100 questions',
+			'pages.guess_operator.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Guess operator: ${oneMinuteModeQuestionsCount} questions / 1 min',
+			'pages.guess_operator.oneHundredQuestions.title' => 'Guess operator: 100 questions',
 			_ => null,
 		};
 	}

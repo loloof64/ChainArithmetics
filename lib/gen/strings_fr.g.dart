@@ -50,6 +50,7 @@ class _TranslationsPagesFr implements TranslationsPagesEn {
 	@override late final _TranslationsPagesCommonFr common = _TranslationsPagesCommonFr._(_root);
 	@override late final _TranslationsPagesHomeFr home = _TranslationsPagesHomeFr._(_root);
 	@override late final _TranslationsPagesStandardExercisesFr standard_exercises = _TranslationsPagesStandardExercisesFr._(_root);
+	@override late final _TranslationsPagesGuessOperatorFr guess_operator = _TranslationsPagesGuessOperatorFr._(_root);
 }
 
 // Path: pages.common
@@ -88,6 +89,18 @@ class _TranslationsPagesStandardExercisesFr implements TranslationsPagesStandard
 	@override late final _TranslationsPagesStandardExercisesOneHundredQuestionsFr oneHundredQuestions = _TranslationsPagesStandardExercisesOneHundredQuestionsFr._(_root);
 }
 
+// Path: pages.guess_operator
+class _TranslationsPagesGuessOperatorFr implements TranslationsPagesGuessOperatorEn {
+	_TranslationsPagesGuessOperatorFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsPagesGuessOperatorHomeFr home = _TranslationsPagesGuessOperatorHomeFr._(_root);
+	@override late final _TranslationsPagesGuessOperatorThirtyQuestionsFr thirtyQuestions = _TranslationsPagesGuessOperatorThirtyQuestionsFr._(_root);
+	@override late final _TranslationsPagesGuessOperatorOneHundredQuestionsFr oneHundredQuestions = _TranslationsPagesGuessOperatorOneHundredQuestionsFr._(_root);
+}
+
 // Path: pages.common.penalty
 class _TranslationsPagesCommonPenaltyFr implements TranslationsPagesCommonPenaltyEn {
 	_TranslationsPagesCommonPenaltyFr._(this._root);
@@ -107,6 +120,7 @@ class _TranslationsPagesHomeButtonsFr implements TranslationsPagesHomeButtonsEn 
 
 	// Translations
 	@override String get standard_exercises => 'Standard';
+	@override String get guess_operator => 'Deviner l\'opérateur';
 }
 
 // Path: pages.standard_exercises.home
@@ -141,6 +155,38 @@ class _TranslationsPagesStandardExercisesOneHundredQuestionsFr implements Transl
 	@override String get title => 'Calcul: 100 questions';
 }
 
+// Path: pages.guess_operator.home
+class _TranslationsPagesGuessOperatorHomeFr implements TranslationsPagesGuessOperatorHomeEn {
+	_TranslationsPagesGuessOperatorHomeFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Deviner l\'opérateur';
+	@override String get gotoThirtyQuestions => 'Questions sur 1 min';
+	@override String get gotoOneHundredQuestions => '100 questions';
+}
+
+// Path: pages.guess_operator.thirtyQuestions
+class _TranslationsPagesGuessOperatorThirtyQuestionsFr implements TranslationsPagesGuessOperatorThirtyQuestionsEn {
+	_TranslationsPagesGuessOperatorThirtyQuestionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String title({required Object oneMinuteModeQuestionsCount}) => 'Deviner l\'opérateur: ${oneMinuteModeQuestionsCount} questions / 1 min';
+}
+
+// Path: pages.guess_operator.oneHundredQuestions
+class _TranslationsPagesGuessOperatorOneHundredQuestionsFr implements TranslationsPagesGuessOperatorOneHundredQuestionsEn {
+	_TranslationsPagesGuessOperatorOneHundredQuestionsFr._(this._root);
+
+	final TranslationsFr _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Deviner l\'opérateur: 100 questions';
+}
+
 /// The flat map containing all translations for locale <fr>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -156,11 +202,17 @@ extension on TranslationsFr {
 			'pages.common.penalty.one_hundred_questions_mode' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeMinutes, required Object totalPenaltyTimeSeconds}) => 'Pénalité: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s',
 			'pages.home.title' => 'Accueil',
 			'pages.home.buttons.standard_exercises' => 'Standard',
+			'pages.home.buttons.guess_operator' => 'Deviner l\'opérateur',
 			'pages.standard_exercises.home.title' => 'Calcul standard',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => 'Questions sur 1 min',
 			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 questions',
 			'pages.standard_exercises.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Calcul: ${oneMinuteModeQuestionsCount} questions / 1 min',
 			'pages.standard_exercises.oneHundredQuestions.title' => 'Calcul: 100 questions',
+			'pages.guess_operator.home.title' => 'Deviner l\'opérateur',
+			'pages.guess_operator.home.gotoThirtyQuestions' => 'Questions sur 1 min',
+			'pages.guess_operator.home.gotoOneHundredQuestions' => '100 questions',
+			'pages.guess_operator.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Deviner l\'opérateur: ${oneMinuteModeQuestionsCount} questions / 1 min',
+			'pages.guess_operator.oneHundredQuestions.title' => 'Deviner l\'opérateur: 100 questions',
 			_ => null,
 		};
 	}

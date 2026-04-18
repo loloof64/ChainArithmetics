@@ -1,16 +1,16 @@
 import 'package:chain_arithmetics/gen/strings.g.dart';
-import 'package:chain_arithmetics/pages/standard_exercises/one_hundred_questions.dart';
-import 'package:chain_arithmetics/pages/standard_exercises/thirty_questions.dart';
+import 'package:chain_arithmetics/pages/guess_operators/one_hundred_questions.dart';
+import 'package:chain_arithmetics/pages/guess_operators/thirty_questions.dart';
 import 'package:flutter/material.dart';
 
-class StandardExercisesHomePage extends StatelessWidget {
-  const StandardExercisesHomePage({super.key});
+class GuessOperatorHomePage extends StatelessWidget {
+  const GuessOperatorHomePage({super.key});
 
   void _goToThirtyQuestions(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx2) {
-          return ThirtyQuestionsStandardPage();
+          return ThirtyQuestionsGuessOperatorsPage();
         },
       ),
     );
@@ -20,7 +20,7 @@ class StandardExercisesHomePage extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx2) {
-          return OneHundredQuestionsStandardPage();
+          return OneHundredQuestionsGuessOperatorPage();
         },
       ),
     );
@@ -30,7 +30,7 @@ class StandardExercisesHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.pages.standard_exercises.home.title),
+        title: Text(t.pages.guess_operator.home.title),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
@@ -41,13 +41,11 @@ class StandardExercisesHomePage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () => _goToThirtyQuestions(context),
-              child: Text(t.pages.standard_exercises.home.gotoThirtyQuestions),
+              child: Text(t.pages.guess_operator.home.gotoThirtyQuestions),
             ),
             ElevatedButton(
               onPressed: () => _goToOneHundredQuestions(context),
-              child: Text(
-                t.pages.standard_exercises.home.gotoOneHundredQuestions,
-              ),
+              child: Text(t.pages.guess_operator.home.gotoOneHundredQuestions),
             ),
           ],
         ),

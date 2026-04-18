@@ -1,4 +1,4 @@
-import 'package:chain_arithmetics/core/generators/operations/operation.dart';
+import 'package:chain_arithmetics/core/generators/common.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/question.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_list_plus/animated_list_plus.dart';
@@ -7,7 +7,7 @@ import 'package:animated_list_plus/transitions.dart';
 const animationDurationMs = 500;
 
 class QuestionsBufferWidget extends StatelessWidget {
-  final List<Operation> questions;
+  final List<Question> questions;
   final int capacity;
 
   const QuestionsBufferWidget({
@@ -19,7 +19,7 @@ class QuestionsBufferWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ImplicitlyAnimatedList<Operation>(
+      child: ImplicitlyAnimatedList<Question>(
         items: questions,
         areItemsTheSame: (a, b) => a == b,
         insertDuration: Duration(milliseconds: animationDurationMs),

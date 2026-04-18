@@ -12,7 +12,8 @@
     "home": {
       "title": "Home",
       "buttons": {
-        "standard_exercises": "Standard"
+        "standard_exercises": "Standard",
+        "guess_operator": "Guess operator"
       }
     },
     "standard_exercises": {
@@ -26,6 +27,19 @@
       },
       "oneHundredQuestions": {
         "title": "Calculation: 100 questions"
+      }
+    },
+    "guess_operator": {
+      "home": {
+        "title": "Guess operator",
+        "gotoThirtyQuestions": "1 min questions",
+        "gotoOneHundredQuestions": "100 questions"
+      },
+      "thirtyQuestions": {
+        "title": "Guess operator: $oneMinuteModeQuestionsCount questions / 1 min"
+      },
+      "oneHundredQuestions": {
+        "title": "Guess operator: 100 questions"
       }
     }
   }

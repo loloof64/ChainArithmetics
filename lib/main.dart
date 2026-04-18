@@ -1,5 +1,6 @@
 import 'package:chain_arithmetics/gen/strings.g.dart';
-import 'package:chain_arithmetics/pages/standard_exercises/home.dart';
+import 'package:chain_arithmetics/pages/guess_operators/home.dart';
+import 'package:chain_arithmetics/pages/operations/home.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,6 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _gotoGuessOperatorExercisesPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx2) {
+          return GuessOperatorHomePage();
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,9 +69,21 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () => _gotoStandardExercisesPage(context),
-          child: Text(t.pages.home.buttons.standard_exercises),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 15,
+          children: [
+            ElevatedButton(
+              onPressed: () => _gotoStandardExercisesPage(context),
+              child: Text(t.pages.home.buttons.standard_exercises),
+            ),
+            ElevatedButton(
+              onPressed: () => _gotoGuessOperatorExercisesPage(context),
+              child: Text(t.pages.home.buttons.guess_operator),
+            ),
+          ],
         ),
       ),
     );

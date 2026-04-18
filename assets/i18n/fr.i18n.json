@@ -12,7 +12,8 @@
     "home": {
       "title": "Accueil",
       "buttons": {
-        "standard_exercises": "Standard"
+        "standard_exercises": "Standard",
+        "guess_operator": "Deviner l'opérateur"
       }
     },
     "standard_exercises": {
@@ -26,6 +27,19 @@
       },
       "oneHundredQuestions": {
         "title": "Calcul: 100 questions"
+      }
+    },
+    "guess_operator": {
+      "home": {
+        "title": "Deviner l'opérateur",
+        "gotoThirtyQuestions": "Questions sur 1 min",
+        "gotoOneHundredQuestions": "100 questions"
+      },
+      "thirtyQuestions": {
+        "title": "Deviner l'opérateur: $oneMinuteModeQuestionsCount questions / 1 min"
+      },
+      "oneHundredQuestions": {
+        "title": "Deviner l'opérateur: 100 questions"
       }
     }
   }

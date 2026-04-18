@@ -1,13 +1,15 @@
+import 'package:chain_arithmetics/core/generators/common.dart';
 import 'package:chain_arithmetics/core/generators/operations/operation.dart';
 import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/exercise_session.dart';
 
-class StandardGenerator {
-  final List<Operation> operations;
+class StandardGenerator extends Generator {
+  final List<Question> operations;
 
   StandardGenerator._({required this.operations});
 
-  List<Operation> relatedOperations() => operations;
+  @override
+  List<Question> relatedQuestions() => operations;
 
   String questionRepr() {
     return operations.map((e) => e.questionRepr()).join("\n");
@@ -22,5 +24,10 @@ class StandardGenerator {
       operationsList.add(Operation.randomOperation());
     }
     return StandardGenerator._(operations: operationsList);
+  }
+
+  @override
+  int questionsCount() {
+    return operations.length;
   }
 }

@@ -12,7 +12,8 @@
     "home": {
       "title": "Inicio",
       "buttons": {
-        "standard_exercises": "Estándar"
+        "standard_exercises": "Estándar",
+        "guess_operator": "Adivina el operador"
       }
     },
     "standard_exercises": {
@@ -26,6 +27,19 @@
       },
       "oneHundredQuestions": {
         "title": "Cálculo: 100 preguntas "
+      }
+    },
+    "guess_operator": {
+      "home": {
+        "title": "Adivina el operador",
+        "gotoThirtyQuestions": "Preguntas de 1 min",
+        "gotoOneHundredQuestions": "100 preguntas"
+      },
+      "thirtyQuestions": {
+        "title": "Adivina el operador: $oneMinuteModeQuestionsCount preguntas / 1 min"
+      },
+      "oneHundredQuestions": {
+        "title": "Adivina el operador: 100 preguntas"
       }
     }
   }

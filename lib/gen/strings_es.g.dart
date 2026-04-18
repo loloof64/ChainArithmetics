@@ -50,6 +50,7 @@ class _TranslationsPagesEs implements TranslationsPagesEn {
 	@override late final _TranslationsPagesCommonEs common = _TranslationsPagesCommonEs._(_root);
 	@override late final _TranslationsPagesHomeEs home = _TranslationsPagesHomeEs._(_root);
 	@override late final _TranslationsPagesStandardExercisesEs standard_exercises = _TranslationsPagesStandardExercisesEs._(_root);
+	@override late final _TranslationsPagesGuessOperatorEs guess_operator = _TranslationsPagesGuessOperatorEs._(_root);
 }
 
 // Path: pages.common
@@ -88,6 +89,18 @@ class _TranslationsPagesStandardExercisesEs implements TranslationsPagesStandard
 	@override late final _TranslationsPagesStandardExercisesOneHundredQuestionsEs oneHundredQuestions = _TranslationsPagesStandardExercisesOneHundredQuestionsEs._(_root);
 }
 
+// Path: pages.guess_operator
+class _TranslationsPagesGuessOperatorEs implements TranslationsPagesGuessOperatorEn {
+	_TranslationsPagesGuessOperatorEs._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override late final _TranslationsPagesGuessOperatorHomeEs home = _TranslationsPagesGuessOperatorHomeEs._(_root);
+	@override late final _TranslationsPagesGuessOperatorThirtyQuestionsEs thirtyQuestions = _TranslationsPagesGuessOperatorThirtyQuestionsEs._(_root);
+	@override late final _TranslationsPagesGuessOperatorOneHundredQuestionsEs oneHundredQuestions = _TranslationsPagesGuessOperatorOneHundredQuestionsEs._(_root);
+}
+
 // Path: pages.common.penalty
 class _TranslationsPagesCommonPenaltyEs implements TranslationsPagesCommonPenaltyEn {
 	_TranslationsPagesCommonPenaltyEs._(this._root);
@@ -107,6 +120,7 @@ class _TranslationsPagesHomeButtonsEs implements TranslationsPagesHomeButtonsEn 
 
 	// Translations
 	@override String get standard_exercises => 'Estándar';
+	@override String get guess_operator => 'Adivina el operador';
 }
 
 // Path: pages.standard_exercises.home
@@ -141,6 +155,38 @@ class _TranslationsPagesStandardExercisesOneHundredQuestionsEs implements Transl
 	@override String get title => 'Cálculo: 100 preguntas ';
 }
 
+// Path: pages.guess_operator.home
+class _TranslationsPagesGuessOperatorHomeEs implements TranslationsPagesGuessOperatorHomeEn {
+	_TranslationsPagesGuessOperatorHomeEs._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Adivina el operador';
+	@override String get gotoThirtyQuestions => 'Preguntas de 1 min';
+	@override String get gotoOneHundredQuestions => '100 preguntas';
+}
+
+// Path: pages.guess_operator.thirtyQuestions
+class _TranslationsPagesGuessOperatorThirtyQuestionsEs implements TranslationsPagesGuessOperatorThirtyQuestionsEn {
+	_TranslationsPagesGuessOperatorThirtyQuestionsEs._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String title({required Object oneMinuteModeQuestionsCount}) => 'Adivina el operador: ${oneMinuteModeQuestionsCount} preguntas / 1 min';
+}
+
+// Path: pages.guess_operator.oneHundredQuestions
+class _TranslationsPagesGuessOperatorOneHundredQuestionsEs implements TranslationsPagesGuessOperatorOneHundredQuestionsEn {
+	_TranslationsPagesGuessOperatorOneHundredQuestionsEs._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Adivina el operador: 100 preguntas';
+}
+
 /// The flat map containing all translations for locale <es>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -156,11 +202,17 @@ extension on TranslationsEs {
 			'pages.common.penalty.one_hundred_questions_mode' => ({required Object penaltyCount, required Object penaltyTimeSeconds, required Object totalPenaltyTimeMinutes, required Object totalPenaltyTimeSeconds}) => 'Penalización: ${penaltyCount} * ${penaltyTimeSeconds}s = ${totalPenaltyTimeMinutes}m ${totalPenaltyTimeSeconds}s',
 			'pages.home.title' => 'Inicio',
 			'pages.home.buttons.standard_exercises' => 'Estándar',
+			'pages.home.buttons.guess_operator' => 'Adivina el operador',
 			'pages.standard_exercises.home.title' => 'Cálculo estándar',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => 'Preguntas sobre 1 min',
 			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 preguntas',
 			'pages.standard_exercises.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Cálculo: ${oneMinuteModeQuestionsCount} preguntas / 1 min',
 			'pages.standard_exercises.oneHundredQuestions.title' => 'Cálculo: 100 preguntas ',
+			'pages.guess_operator.home.title' => 'Adivina el operador',
+			'pages.guess_operator.home.gotoThirtyQuestions' => 'Preguntas de 1 min',
+			'pages.guess_operator.home.gotoOneHundredQuestions' => '100 preguntas',
+			'pages.guess_operator.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Adivina el operador: ${oneMinuteModeQuestionsCount} preguntas / 1 min',
+			'pages.guess_operator.oneHundredQuestions.title' => 'Adivina el operador: 100 preguntas',
 			_ => null,
 		};
 	}

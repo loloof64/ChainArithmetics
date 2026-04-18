@@ -4,90 +4,103 @@ import 'package:chain_arithmetics/core/generators/common.dart';
 
 Random _random = Random();
 
-class Operation extends Question {
+class GuessOperator extends Question {
   final int operand_1;
   final int operand_2;
+  final Operator expectedOperator;
   final int result;
-  final Operator relatedOperator;
 
-  Operation({
+  GuessOperator({
     required this.operand_1,
     required this.operand_2,
+    required this.expectedOperator,
     required this.result,
-    required this.relatedOperator,
   });
 
   @override
   String questionRepr() {
-    return "$operand_1 ${relatedOperator.stringRepr()} $operand_2 = ";
+    return "$operand_1 _ $operand_2 = $result";
+  }
+
+  String answerReprPart1() {
+    return "$operand_1  ";
+  }
+
+  String answerReprPart2() {
+    return "  $operand_2 = $result";
   }
 
   @override
   bool isCorrectAnswer(String answer) {
-    if (answer.isEmpty) return false;
-    final answerInt = int.parse(answer);
-    return answerInt == result;
+    return switch (answer) {
+      "" => false,
+      "+" => operand_1 + operand_2 == result,
+      "-" => operand_1 - operand_2 == result,
+      "*" => operand_1 * operand_2 == result,
+      "/" => operand_1 / operand_2 == result,
+      _ => throw "unknown operator $answer",
+    };
   }
 
-  factory Operation.randomAddition() {
+  factory GuessOperator.randomAddition() {
     final oper1 = _random.nextInt(8) + 2;
     final oper2 = _random.nextInt(8) + 2;
     final result = oper1 + oper2;
 
-    return Operation(
+    return GuessOperator(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
-      relatedOperator: Operator.add,
+      expectedOperator: Operator.add,
     );
   }
 
-  factory Operation.randomSubstraction() {
+  factory GuessOperator.randomSubstraction() {
     final oper2 = _random.nextInt(8) + 2;
     final result = _random.nextInt(8) + 2;
     final oper1 = oper2 + result;
 
-    return Operation(
+    return GuessOperator(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
-      relatedOperator: Operator.sub,
+      expectedOperator: Operator.sub,
     );
   }
 
-  factory Operation.randomMultiplication() {
+  factory GuessOperator.randomMultiplication() {
     final oper1 = _random.nextInt(8) + 2;
     final oper2 = _random.nextInt(8) + 2;
     final result = oper1 * oper2;
 
-    return Operation(
+    return GuessOperator(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
-      relatedOperator: Operator.mult,
+      expectedOperator: Operator.mult,
     );
   }
 
-  factory Operation.randomDivision() {
+  factory GuessOperator.randomDivision() {
     final oper2 = _random.nextInt(8) + 2;
     final result = _random.nextInt(8) + 2;
     final oper1 = oper2 * result;
 
-    return Operation(
+    return GuessOperator(
       operand_1: oper1,
       operand_2: oper2,
       result: result,
-      relatedOperator: Operator.divide,
+      expectedOperator: Operator.divide,
     );
   }
 
-  factory Operation.randomOperation() {
+  factory GuessOperator.randomGuessOperator() {
     final type = _random.nextInt(4);
     return switch (type) {
-      0 => Operation.randomAddition(),
-      1 => Operation.randomSubstraction(),
-      2 => Operation.randomMultiplication(),
-      3 => Operation.randomDivision(),
+      0 => GuessOperator.randomAddition(),
+      1 => GuessOperator.randomSubstraction(),
+      2 => GuessOperator.randomMultiplication(),
+      3 => GuessOperator.randomDivision(),
       _ => throw "Invalid operation type cardinal",
     };
   }
