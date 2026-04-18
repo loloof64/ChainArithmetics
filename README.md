@@ -4,6 +4,15 @@ Simple arithmetic, but be very fast.
 
 ## For developers
 
+### Linux dependencies
+
+On linux, you will need dependencies to GStreamers 1.0 dev and GStreamers plugins 1.0 dev.
+So, if on Debian based linux, you can run
+
+```
+sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev -y
+```
+
 ### Translations
 
 Generate translations with command `dart run slang` in the root of the project.
