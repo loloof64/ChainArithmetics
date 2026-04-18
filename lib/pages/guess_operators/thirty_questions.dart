@@ -1,5 +1,4 @@
 import 'package:chain_arithmetics/gen/strings.g.dart';
-import 'package:chain_arithmetics/widgets/constants.dart';
 import 'package:chain_arithmetics/widgets/exercise_session/exercise_session.dart';
 import 'package:flutter/material.dart';
 
@@ -9,9 +8,7 @@ class ThirtyQuestionsGuessOperatorsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExerciseSessionWidget(
-      title: t.pages.guess_operator.thirtyQuestions.title(
-        oneMinuteModeQuestionsCount: oneMinuteModeQuestionsCount,
-      ),
+      title: t.pages.guess_operator.thirtyQuestions.title,
       mode: Mode.oneMinute,
       type: Type.operators,
     );

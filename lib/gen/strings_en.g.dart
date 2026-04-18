@@ -170,8 +170,8 @@ class TranslationsPagesStandardExercisesThirtyQuestionsEn {
 
 	// Translations
 
-	/// en: 'Calculation: $oneMinuteModeQuestionsCount questions / 1 min'
-	String title({required Object oneMinuteModeQuestionsCount}) => 'Calculation: ${oneMinuteModeQuestionsCount} questions / 1 min';
+	/// en: 'Calculation: 1 min'
+	String get title => 'Calculation: 1 min';
 }
 
 // Path: pages.standard_exercises.oneHundredQuestions
@@ -194,8 +194,8 @@ class TranslationsPagesGuessOperatorHomeEn {
 
 	// Translations
 
-	/// en: 'Guess operator'
-	String get title => 'Guess operator';
+	/// en: 'Operator'
+	String get title => 'Operator';
 
 	/// en: '1 min questions'
 	String get gotoThirtyQuestions => '1 min questions';
@@ -212,8 +212,8 @@ class TranslationsPagesGuessOperatorThirtyQuestionsEn {
 
 	// Translations
 
-	/// en: 'Guess operator: $oneMinuteModeQuestionsCount questions / 1 min'
-	String title({required Object oneMinuteModeQuestionsCount}) => 'Guess operator: ${oneMinuteModeQuestionsCount} questions / 1 min';
+	/// en: 'Operator: 1 min'
+	String get title => 'Operator: 1 min';
 }
 
 // Path: pages.guess_operator.oneHundredQuestions
@@ -224,8 +224,8 @@ class TranslationsPagesGuessOperatorOneHundredQuestionsEn {
 
 	// Translations
 
-	/// en: 'Guess operator: 100 questions'
-	String get title => 'Guess operator: 100 questions';
+	/// en: 'Operator: 100 questions'
+	String get title => 'Operator: 100 questions';
 }
 
 /// The flat map containing all translations for locale <en>.
@@ -247,13 +247,13 @@ extension on Translations {
 			'pages.standard_exercises.home.title' => 'Standard calculation',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => '1 min questions',
 			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 questions',
-			'pages.standard_exercises.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Calculation: ${oneMinuteModeQuestionsCount} questions / 1 min',
+			'pages.standard_exercises.thirtyQuestions.title' => 'Calculation: 1 min',
 			'pages.standard_exercises.oneHundredQuestions.title' => 'Calculation: 100 questions',
-			'pages.guess_operator.home.title' => 'Guess operator',
+			'pages.guess_operator.home.title' => 'Operator',
 			'pages.guess_operator.home.gotoThirtyQuestions' => '1 min questions',
 			'pages.guess_operator.home.gotoOneHundredQuestions' => '100 questions',
-			'pages.guess_operator.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Guess operator: ${oneMinuteModeQuestionsCount} questions / 1 min',
-			'pages.guess_operator.oneHundredQuestions.title' => 'Guess operator: 100 questions',
+			'pages.guess_operator.thirtyQuestions.title' => 'Operator: 1 min',
+			'pages.guess_operator.oneHundredQuestions.title' => 'Operator: 100 questions',
 			_ => null,
 		};
 	}

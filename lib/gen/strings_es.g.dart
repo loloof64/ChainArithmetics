@@ -142,7 +142,7 @@ class _TranslationsPagesStandardExercisesThirtyQuestionsEs implements Translatio
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
-	@override String title({required Object oneMinuteModeQuestionsCount}) => 'Cálculo: ${oneMinuteModeQuestionsCount} preguntas / 1 min';
+	@override String get title => 'Cálculo: 1 min';
 }
 
 // Path: pages.standard_exercises.oneHundredQuestions
@@ -162,7 +162,7 @@ class _TranslationsPagesGuessOperatorHomeEs implements TranslationsPagesGuessOpe
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Adivina el operador';
+	@override String get title => 'Operador';
 	@override String get gotoThirtyQuestions => 'Preguntas de 1 min';
 	@override String get gotoOneHundredQuestions => '100 preguntas';
 }
@@ -174,7 +174,7 @@ class _TranslationsPagesGuessOperatorThirtyQuestionsEs implements TranslationsPa
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
-	@override String title({required Object oneMinuteModeQuestionsCount}) => 'Adivina el operador: ${oneMinuteModeQuestionsCount} preguntas / 1 min';
+	@override String get title => 'Operador: 1 min';
 }
 
 // Path: pages.guess_operator.oneHundredQuestions
@@ -184,7 +184,7 @@ class _TranslationsPagesGuessOperatorOneHundredQuestionsEs implements Translatio
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Adivina el operador: 100 preguntas';
+	@override String get title => 'Operador: 100 preguntas';
 }
 
 /// The flat map containing all translations for locale <es>.
@@ -206,13 +206,13 @@ extension on TranslationsEs {
 			'pages.standard_exercises.home.title' => 'Cálculo estándar',
 			'pages.standard_exercises.home.gotoThirtyQuestions' => 'Preguntas sobre 1 min',
 			'pages.standard_exercises.home.gotoOneHundredQuestions' => '100 preguntas',
-			'pages.standard_exercises.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Cálculo: ${oneMinuteModeQuestionsCount} preguntas / 1 min',
+			'pages.standard_exercises.thirtyQuestions.title' => 'Cálculo: 1 min',
 			'pages.standard_exercises.oneHundredQuestions.title' => 'Cálculo: 100 preguntas ',
-			'pages.guess_operator.home.title' => 'Adivina el operador',
+			'pages.guess_operator.home.title' => 'Operador',
 			'pages.guess_operator.home.gotoThirtyQuestions' => 'Preguntas de 1 min',
 			'pages.guess_operator.home.gotoOneHundredQuestions' => '100 preguntas',
-			'pages.guess_operator.thirtyQuestions.title' => ({required Object oneMinuteModeQuestionsCount}) => 'Adivina el operador: ${oneMinuteModeQuestionsCount} preguntas / 1 min',
-			'pages.guess_operator.oneHundredQuestions.title' => 'Adivina el operador: 100 preguntas',
+			'pages.guess_operator.thirtyQuestions.title' => 'Operador: 1 min',
+			'pages.guess_operator.oneHundredQuestions.title' => 'Operador: 100 preguntas',
 			_ => null,
 		};
 	}

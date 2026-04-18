@@ -23,7 +23,7 @@
         "gotoOneHundredQuestions": "100 questions"
       },
       "thirtyQuestions": {
-        "title": "Calculation: $oneMinuteModeQuestionsCount questions / 1 min"
+        "title": "Calculation: 1 min"
       },
       "oneHundredQuestions": {
         "title": "Calculation: 100 questions"
@@ -31,15 +31,15 @@
     },
     "guess_operator": {
       "home": {
-        "title": "Guess operator",
+        "title": "Operator",
         "gotoThirtyQuestions": "1 min questions",
         "gotoOneHundredQuestions": "100 questions"
       },
       "thirtyQuestions": {
-        "title": "Guess operator: $oneMinuteModeQuestionsCount questions / 1 min"
+        "title": "Operator: 1 min"
       },
       "oneHundredQuestions": {
-        "title": "Guess operator: 100 questions"
+        "title": "Operator: 100 questions"
       }
     }
   }
