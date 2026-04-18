@@ -26,6 +26,21 @@ flutter pub get
 dart run flutter_launcher_icons
 ```
 
+### Build for Android
+
+1. Create a keystore file : chain_arithmetics.jks
+2. Place it in android/app folder
+3. Add a file android/key.properties
+
+```groovy
+storePassword=<password-from-previous-step>
+keyPassword=<password-from-previous-step>
+keyAlias=upload
+storeFile=<keystore-file-location>
+```
+
+4. Run `flutter build appbundle`
+
 ## Credits
 
 ### Sounds
