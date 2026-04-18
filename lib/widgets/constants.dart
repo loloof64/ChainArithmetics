@@ -13,8 +13,9 @@ final dummyOperation = Operation(
   relatedOperator: Operator.add,
 );
 
-const flagTooltipDurationMs = 800;
+const flagTooltipDurationMs = 1800;
 const penaltyTooltipDurationMs = 600;
+const defaultTooltipFontSize = 18.0;
 const maxAllocatedTimeMinutes = 5;
 final flagTooltipOffset = Offset(30, 100);
 final penaltyTooltipOffset = Offset(300, 100);

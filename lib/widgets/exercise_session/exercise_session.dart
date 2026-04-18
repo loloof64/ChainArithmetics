@@ -113,6 +113,7 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
     required Offset position,
     required Color backgroundColor,
     required Duration duration,
+    double? fontSize,
     IconData? leadingIcon,
   }) {
     final overlay = Overlay.of(context);
@@ -123,7 +124,7 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
         child: Material(
           color: Colors.transparent,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: backgroundColor,
               shape: BoxShape.circle,
@@ -131,12 +132,14 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
             child: Center(
               child: Row(
                 children: [
-                  if (leadingIcon != null) Icon(leadingIcon),
+                  if (leadingIcon != null)
+                    Icon(leadingIcon, size: fontSize ?? defaultTooltipFontSize),
                   Text(
                     message,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: fontSize ?? defaultTooltipFontSize,
                     ),
                   ),
                 ],
@@ -248,6 +251,7 @@ class _ExerciseSessionWidgetState extends State<ExerciseSessionWidget> {
           backgroundColor: Colors.grey,
           duration: Duration(milliseconds: flagTooltipDurationMs),
           leadingIcon: Icons.flag,
+          fontSize: 40.0,
         );
       }
       _updateBuffer();
