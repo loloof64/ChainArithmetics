@@ -89,6 +89,7 @@ jobs:
           mkdir -p "$PKG/usr/bin"
           mkdir -p "$PKG/usr/share/applications"
           mkdir -p "$PKG/usr/share/pixmaps"
+          mkdir -p "$PKG/usr/share/icons/hicolor/256x256/apps"
 
           cp -r build/linux/x64/release/bundle/* "$PKG/usr/lib/$APP_NAME/"
 
@@ -110,6 +111,8 @@ jobs:
 
           [ -f assets/icon/icon.png ] && \
             cp assets/icon/icon.png "$PKG/usr/share/pixmaps/$APP_NAME.png"
+          [ -f assets/icon/icon.png ] && \
+            cp assets/icon/icon.png "$PKG/usr/share/icons/hicolor/256x256/apps/$APP_NAME.png"
 
           cat > "$PKG/DEBIAN/control" << CTRL
           Package: chain-arithmetics
@@ -121,6 +124,13 @@ jobs:
           Maintainer: loloof64
           Description: Simple arithmetics, but be fast !
           CTRL
+
+          cat > "$PKG/DEBIAN/postinst" << 'POSTINST'
+          #!/bin/sh
+          gtk-update-icon-cache -f -t /usr/share/icons/hicolor || true
+          update-desktop-database /usr/share/applications || true
+          POSTINST
+          chmod 755 "$PKG/DEBIAN/postinst"
 
           dpkg-deb --build "$PKG" "${APP_NAME}-${TAG}.deb"
 
@@ -273,6 +283,9 @@ jobs:
           HERE=${SELF%/*}
           export LD_LIBRARY_PATH="$HERE/usr/bin/lib:$HERE/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
           export WEBKIT_EXEC_PATH="$HERE/usr/lib/webkit2gtk-4.1"
+          # Expose the bundled icon directory so GTK icon theme lookups
+          # (and hence _NET_WM_ICON / taskbar icons) work on all DEs.
+          export XDG_DATA_DIRS="$HERE/usr/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
           # Suppress "Failed to load module" warnings for optional GTK modules
           # (canberra-gtk-module, pk-gtk-module) that are not bundled.
           export GTK_MODULES=""

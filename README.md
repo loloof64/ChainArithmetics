@@ -7,6 +7,17 @@ Simple arithmetic, but be very fast.
 There are two types of computation : guess the result and guess the missing operator.
 And for each type of computation, you can either try to answer 35 questions in 1 minute, or try to answer 100 questions under 5 minutes.
 
+## Linux users
+
+### AppImage
+
+First don't forget to make the app executable.
+On fedora, you may have to install fuse-libs first.
+
+```
+sudo dnf install fuse-libs -y
+```
+
 ## For developers
 
 ### Linux dependencies

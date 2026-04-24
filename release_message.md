@@ -1,2 +1,1 @@
-- fix missing taskbar icon issue on Linux artifacts
-- removed unuseful dependencies from Linux artifacts
+- fix missing taskbar icon issue on some Linux artifacts
