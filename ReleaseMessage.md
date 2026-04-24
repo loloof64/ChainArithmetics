@@ -1,1 +1,1 @@
-# First usable version
+- fix appimage file (too heavy and buggy)
