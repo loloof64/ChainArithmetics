@@ -50,6 +50,18 @@ AppDir:
       - libunwind-dev
       - libgstreamer1.0-dev
       - libgstreamer-plugins-base1.0-dev
+      - mesa-utils
+      - libegl1
+      - libegl-mesa0
+      - libgl1
+      - libgl1-mesa-glx
+      - libglx-mesa0
+      - libxkbcommon0
+      - libxcb1
+      - libx11-xcb1
+      - mesa-va-drivers
+      - mesa-vdpau-drivers
+      - libgl1-mesa-dri
     exclude:
       - humanity-icon-theme
       - hicolor-icon-theme
@@ -65,6 +77,7 @@ AppDir:
   runtime:
     env:
       GDK_BACKEND: x11
+      LIBGL_DRIVERS_PATH: $APPDIR/usr/lib/x86_64-linux-gnu/dri
   test:
     fedora:
       image: appimagecrafters/tests-env:fedora-30
