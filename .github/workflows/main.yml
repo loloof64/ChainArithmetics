@@ -107,8 +107,8 @@ jobs:
           Categories=Game;Education;
           DESKTOP
 
-          [ -f assets/images/icon.png ] && \
-            cp assets/images/icon.png "$PKG/usr/share/pixmaps/$APP_NAME.png"
+          [ -f assets/icon/icon.png ] && \
+            cp assets/icon/icon.png "$PKG/usr/share/pixmaps/$APP_NAME.png"
 
           cat > "$PKG/DEBIAN/control" << CTRL
           Package: chain-arithmetics
@@ -137,8 +137,11 @@ jobs:
 
           cp -r build/linux/x64/release/bundle/* "$STAGED/usr/lib/$APP_NAME/"
 
-          [ -f assets/images/icon.png ] && \
-            cp assets/images/icon.png "$STAGED/usr/share/pixmaps/$APP_NAME.png"
+          if [ -f assets/icon/icon.png ]; then
+            cp assets/icon/icon.png "$STAGED/usr/share/pixmaps/$APP_NAME.png"
+          else
+            touch "$STAGED/usr/share/pixmaps/$APP_NAME.png"
+          fi
 
           cat > "$STAGED/usr/bin/$APP_NAME" << 'LAUNCHER'
           #!/bin/sh

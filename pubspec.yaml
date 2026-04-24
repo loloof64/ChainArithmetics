@@ -2,7 +2,7 @@ name: chain_arithmetics
 description: "Simple arithmetic, but be very fast."
 publish_to: "none"
 
-version: 1.0.8+1
+version: 1.0.9+1
 
 environment:
   sdk: ^3.11.4
@@ -13,7 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
+  cupertino_icons: ^1.0.9
   animated_list_plus: ^0.5.2
   audioplayers: ^6.6.0
   slang: ^4.14.0
