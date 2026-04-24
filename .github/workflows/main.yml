@@ -98,13 +98,14 @@ jobs:
           LAUNCHER
           chmod 755 "$PKG/usr/bin/$APP_NAME"
 
-          cat > "$PKG/usr/share/applications/$APP_NAME.desktop" << DESKTOP
+          cat > "$PKG/usr/share/applications/$APP_ID.desktop" << DESKTOP
           [Desktop Entry]
           Name=${APP_DISPLAY_NAME}
           Exec=${APP_NAME}
           Icon=${APP_NAME}
           Type=Application
           Categories=Game;Education;
+          StartupWMClass=${APP_ID}
           DESKTOP
 
           [ -f assets/icon/icon.png ] && \
@@ -116,7 +117,7 @@ jobs:
           Section: games
           Priority: optional
           Architecture: amd64
-          Depends: libgtk-3-0, libwebkit2gtk-4.1-0, libjavascriptcoregtk-4.1-0, libsecret-1-0, libunwind-13, libgstreamer1.0-0, libgstreamer-plugins-base1.0-0
+          Depends: libgtk-3-0, libsecret-1-0, libunwind8, libgstreamer1.0-0, libgstreamer-plugins-base1.0-0
           Maintainer: loloof64
           Description: Simple arithmetics, but be fast !
           CTRL
@@ -149,13 +150,14 @@ jobs:
           LAUNCHER
           chmod 755 "$STAGED/usr/bin/$APP_NAME"
 
-          cat > "$STAGED/usr/share/applications/$APP_NAME.desktop" << DESKTOP
+          cat > "$STAGED/usr/share/applications/$APP_ID.desktop" << DESKTOP
           [Desktop Entry]
           Name=${APP_DISPLAY_NAME}
           Exec=${APP_NAME}
           Icon=${APP_NAME}
           Type=Application
           Categories=Game;Education;
+          StartupWMClass=${APP_ID}
           DESKTOP
 
           cat > "$TOP/SPECS/$APP_NAME.spec" << SPEC
@@ -176,7 +178,7 @@ jobs:
           %files
           /usr/lib/${APP_NAME}/
           /usr/bin/${APP_NAME}
-          /usr/share/applications/${APP_NAME}.desktop
+          /usr/share/applications/${APP_ID}.desktop
           /usr/share/pixmaps/${APP_NAME}.png
           SPEC
 
@@ -253,12 +255,13 @@ jobs:
           Icon=${APP_NAME}
           Type=Application
           Categories=Game;Education;
+          StartupWMClass=${APP_ID}
           DESKTOP
           cp "$APP_DIR/$APP_NAME.desktop" "$APP_DIR/usr/share/applications/"
 
-          if [ -f assets/images/icon.png ]; then
-            cp assets/images/icon.png "$APP_DIR/$APP_NAME.png"
-            cp assets/images/icon.png \
+          if [ -f assets/icon/icon.png ]; then
+            cp assets/icon/icon.png "$APP_DIR/$APP_NAME.png"
+            cp assets/icon/icon.png \
                "$APP_DIR/usr/share/icons/hicolor/256x256/apps/$APP_NAME.png"
           else
             touch "$APP_DIR/$APP_NAME.png"

@@ -1,2 +1,2 @@
-- fix appimage file (does not run)
-- add deb/rpm formats
+- fix missing taskbar icon issue on Linux artifacts
+- removed unuseful dependencies from Linux artifacts

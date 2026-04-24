@@ -1,9 +1,10 @@
 [Desktop Entry]
 Type=Application
-Version=1.0.9
+Version=1.0.10
 Name=Chain Arithmetics
 Comment=Simple arithmetics, but be fast.
 Exec=chain_arithmetics
-Icon=icon
+Icon=chain_arithmetics
 Terminal=false
 Categories=Games;
+StartupWMClass=com.loloof64.chain_arithmetics
