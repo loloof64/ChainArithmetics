@@ -1,1 +1,1 @@
-- fix missing taskbar icon issue on some Linux artifacts
+- fix missing taskbar/window icon issue on some Linux artifacts

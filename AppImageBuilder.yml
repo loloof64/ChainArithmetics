@@ -20,7 +20,7 @@ AppDir:
     id: com.loloof64.ChainArithmetics
     name: Chain Arithmetics
     icon: icon
-    version: 1.0.11
+    version: 1.0.12
     exec: chain_arithmetics
     exec_args: $@
   apt:

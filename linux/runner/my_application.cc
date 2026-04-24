@@ -61,7 +61,40 @@ static void my_application_activate(GApplication *application)
   }
 
   gtk_window_set_default_size(window, 1280, 720);
-  gtk_window_set_icon_name(window, "chain_arithmetics");
+
+  // Load the window icon from the bundled Flutter assets so that _NET_WM_ICON
+  // is set directly on the window.  This works on every DE (GNOME, XFCE, KDE)
+  // without requiring the icon to be registered in the system icon-theme cache,
+  // and also supplies the taskbar/dock icon for AppImages running on GNOME
+  // (where no system .desktop file is present to match against).
+  {
+    g_autofree gchar *exe_path = realpath("/proc/self/exe", NULL);
+    if (exe_path != NULL)
+    {
+      g_autofree gchar *exe_dir = g_path_get_dirname(exe_path);
+      g_autofree gchar *icon_path = g_build_filename(
+          exe_dir, "data", "flutter_assets", "assets", "icon", "icon.png",
+          NULL);
+      GError *err = NULL;
+      GdkPixbuf *pb = gdk_pixbuf_new_from_file(icon_path, &err);
+      if (pb != NULL)
+      {
+        gtk_window_set_icon(window, pb);
+        g_object_unref(pb);
+      }
+      else
+      {
+        // Fallback: theme-name lookup (works when the icon is properly installed)
+        gtk_window_set_icon_name(window, "chain_arithmetics");
+        if (err != NULL)
+          g_error_free(err);
+      }
+    }
+    else
+    {
+      gtk_window_set_icon_name(window, "chain_arithmetics");
+    }
+  }
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(
