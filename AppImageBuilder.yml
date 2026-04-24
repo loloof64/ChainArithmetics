@@ -20,7 +20,7 @@ AppDir:
     id: com.loloof64.ChainArithmetics
     name: Chain Arithmetics
     icon: icon
-    version: 1.0.6
+    version: 1.0.7
     exec: chain_arithmetics
     exec_args: $@
   apt:
@@ -48,10 +48,6 @@ AppDir:
       - libgstreamer-plugins-base1.0-0
       - gstreamer1.0-plugins-base
       - gstreamer1.0-plugins-good
-      - libegl1
-      - libegl-mesa0
-      - libgl1
-      - libglx-mesa0
       - libxkbcommon0
       - libxcb1
       - libx11-xcb1
@@ -61,6 +57,12 @@ AppDir:
       - adwaita-icon-theme
       - ubuntu-mono
       - libwebkit2gtk-4.1
+      - libegl1
+      - libegl-mesa0
+      - libgl1
+      - libglx-mesa0
+      - libglvnd0
+      - libgles2
   files:
     exclude:
       - usr/share/man

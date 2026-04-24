@@ -1,1 +1,2 @@
-- fix appimage file (too heavy and buggy)
+- fix appimage file (does not run)
+- add deb/rpm formats
