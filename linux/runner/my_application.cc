@@ -68,7 +68,7 @@ static void my_application_activate(GApplication *application)
   // and also supplies the taskbar/dock icon for AppImages running on GNOME
   // (where no system .desktop file is present to match against).
   {
-    g_autofree gchar *exe_path = realpath("/proc/self/exe", NULL);
+    g_autofree gchar *exe_path = g_file_read_link("/proc/self/exe", NULL);
     if (exe_path != NULL)
     {
       g_autofree gchar *exe_dir = g_path_get_dirname(exe_path);
