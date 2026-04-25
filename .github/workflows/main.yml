@@ -188,9 +188,9 @@ jobs:
           %install
           cp -a ${STAGED}/* %{buildroot}/
 
-          %post
-          gtk-update-icon-cache -f -t /usr/share/icons/hicolor 2>/dev/null || true
-          update-desktop-database /usr/share/applications 2>/dev/null || true
+          %posttrans
+          /usr/bin/gtk-update-icon-cache -f -t /usr/share/icons/hicolor 2>/dev/null || true
+          /usr/bin/update-desktop-database /usr/share/applications 2>/dev/null || true
 
           %files
           /usr/lib/${APP_NAME}/
@@ -231,7 +231,7 @@ jobs:
           # KDE, …) already ships libgdk-pixbuf-2.0.so.0 with its PNG loader
           # properly configured, so using the host copy lets
           # gdk_pixbuf_new_from_file() succeed (needed for the window icon).
-          EXCLUDE_RE="^libgdk-pixbuf"
+          EXCLUDE_RE="^()"
 
           bundle_deps() {
             local dest="$1"; shift
@@ -302,19 +302,6 @@ jobs:
           # Suppress "Failed to load module" warnings for optional GTK modules
           # (canberra-gtk-module, pk-gtk-module) that are not bundled.
           export GTK_MODULES=""
-          # Self-register the .desktop file and icon into the user's XDG data dirs
-          # so GNOME Shell (Wayland) can show the application and taskbar icon even
-          # without a system-level installation.  The file monitor in GNOME Shell
-          # detects the new entry quickly so the icon typically appears on first use.
-          _LOCAL="${XDG_DATA_HOME:-$HOME/.local/share}"
-          mkdir -p "$_LOCAL/applications" "$_LOCAL/icons/hicolor/256x256/apps"
-          printf '[Desktop Entry]\nName=Chain arithmetics\nExec=%s %%U\nIcon=chain_arithmetics\nType=Application\nCategories=Game;Education;\nStartupWMClass=com.loloof64.chain_arithmetics\n' \
-            "$SELF" > "$_LOCAL/applications/com.loloof64.chain_arithmetics.desktop"
-          [ -f "$HERE/usr/share/icons/hicolor/256x256/apps/chain_arithmetics.png" ] && \
-            cp -f "$HERE/usr/share/icons/hicolor/256x256/apps/chain_arithmetics.png" \
-                  "$_LOCAL/icons/hicolor/256x256/apps/chain_arithmetics.png"
-          gtk-update-icon-cache -f -t "$_LOCAL/icons/hicolor" 2>/dev/null || true
-          update-desktop-database "$_LOCAL/applications" 2>/dev/null || true
           exec "$HERE/usr/bin/chain_arithmetics" "$@"
           APPRUN
           chmod +x "$APP_DIR/AppRun"

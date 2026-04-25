@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Version=1.0.14
+Version=1.0.15
 Name=Chain Arithmetics
 Comment=Simple arithmetics, but be fast.
 Exec=chain_arithmetics

@@ -62,58 +62,6 @@ static void my_application_activate(GApplication *application)
 
   gtk_window_set_default_size(window, 1280, 720);
 
-  // Set the window icon using a multi-size list so every window manager picks
-  // the best fit.  gtk_window_set_icon_list() sets _NET_WM_ICON on X11 with
-  // all common sizes, which xfwm4 (XFCE), KWin (KDE) and other X11 WMs need.
-  // gtk_window_set_default_icon_list() additionally covers session-level icon
-  // consumers such as window switchers that read from the application object.
-  {
-    g_autofree gchar *exe_path = g_file_read_link("/proc/self/exe", NULL);
-    if (exe_path != NULL)
-    {
-      g_autofree gchar *exe_dir = g_path_get_dirname(exe_path);
-      g_autofree gchar *icon_path = g_build_filename(
-          exe_dir, "data", "flutter_assets", "assets", "icon", "icon.png",
-          NULL);
-      GdkPixbuf *pb = gdk_pixbuf_new_from_file(icon_path, NULL);
-      if (pb != NULL)
-      {
-        GdkPixbuf *pb48 = gdk_pixbuf_scale_simple(pb, 48, 48, GDK_INTERP_BILINEAR);
-        GdkPixbuf *pb32 = gdk_pixbuf_scale_simple(pb, 32, 32, GDK_INTERP_BILINEAR);
-        GdkPixbuf *pb16 = gdk_pixbuf_scale_simple(pb, 16, 16, GDK_INTERP_BILINEAR);
-
-        GList *icon_list = g_list_append(NULL, pb);
-        if (pb48)
-          icon_list = g_list_append(icon_list, pb48);
-        if (pb32)
-          icon_list = g_list_append(icon_list, pb32);
-        if (pb16)
-          icon_list = g_list_append(icon_list, pb16);
-
-        gtk_window_set_icon_list(window, icon_list);
-        gtk_window_set_default_icon_list(icon_list);
-
-        g_list_free(icon_list);
-        if (pb48)
-          g_object_unref(pb48);
-        if (pb32)
-          g_object_unref(pb32);
-        if (pb16)
-          g_object_unref(pb16);
-        g_object_unref(pb);
-      }
-      else
-      {
-        // Fallback: theme-name lookup (works when the icon is properly installed).
-        gtk_window_set_icon_name(window, "chain_arithmetics");
-      }
-    }
-    else
-    {
-      gtk_window_set_icon_name(window, "chain_arithmetics");
-    }
-  }
-
   g_autoptr(FlDartProject) project = fl_dart_project_new();
   fl_dart_project_set_dart_entrypoint_arguments(
       project, self->dart_entrypoint_arguments);
